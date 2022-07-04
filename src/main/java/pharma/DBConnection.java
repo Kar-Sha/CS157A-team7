@@ -1,6 +1,9 @@
 package pharma;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -34,7 +37,7 @@ public class DBConnection {
     /**
      * closes connection to MySQL database if it's not already closed
      */
-    public static void closeConnection(){
+    public static void closeConnection() {
         try {
             if(!con.isClosed()) {
                 con.close();
@@ -47,5 +50,51 @@ public class DBConnection {
         catch (SQLException e) {
             System.err.println("Couldn't close database.");
         }
+   }
+   
+   /**
+    * executes a SQL query
+    * @param query - the raw SQL query as a String that will be executed
+    * @return the result of the query
+    */
+   public static List<List<String>> execute(String query) {
+	   	try {
+	   		// connect
+	   		try {
+				mysqlConnect();
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+	   		
+	   		// execute
+	   		Statement statement = con.createStatement();
+	   		ResultSet result = statement.executeQuery(query);
+
+	   		// get info about result
+	   		ResultSetMetaData md = result.getMetaData();
+	   		int numCols = md.getColumnCount();
+	   		
+	   		// store result by going through the ResultSet one row per iteration
+	   		List<List<String>> resultList = new ArrayList<>();
+	   	  	while(result.next()) {
+	   	  		List<String> row = new ArrayList<>();
+	   	  		
+	   	  		// goes through each column from the current row and stores cell data into a list
+	   	  		for (int i = 1; i < numCols + 1; i++) {
+	   	  			row.add(result.getString(i));
+	   	  		}
+	   	  		resultList.add(row);
+	   	  	}
+	   		
+	   		// close connections
+			result.close();
+	   		statement.close();
+		   	closeConnection();
+		   	
+		   	return resultList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	   	return null;
    }
 }
