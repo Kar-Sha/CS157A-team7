@@ -17,7 +17,7 @@ public class DBConnection {
     /**
      * starts connection to MySQL database
      */
-    public static void mysqlConnect() throws NamingException {
+    public static void mysqlConnect() {
         try {
 			InitialContext ic = new InitialContext();
 			DataSource dataSource = (DataSource) ic.lookup("java:/comp/env/jdbc/pharma");
@@ -25,6 +25,9 @@ public class DBConnection {
 			
 			con = dataSource.getConnection();
 			System.out.println("Successfully connected to database.");
+        }
+        catch (NamingException e) {
+        	e.printStackTrace();
         }
         catch (ClassNotFoundException e) {
             System.err.println("Couldn't load driver.");
@@ -60,11 +63,7 @@ public class DBConnection {
    public static List<List<String>> execute(String query) {
 	   	try {
 	   		// connect
-	   		try {
-				mysqlConnect();
-			} catch (NamingException e) {
-				e.printStackTrace();
-			}
+	   		mysqlConnect();
 	   		
 	   		// execute
 	   		Statement statement = con.createStatement();
