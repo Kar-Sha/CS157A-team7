@@ -20,10 +20,14 @@
         pst.setString(1, username);
         pst.setString(2, password);
         ResultSet rs = pst.executeQuery();                        
-        if(rs.next())
+        if(rs.next()) {
+        	con.close();
         	response.sendRedirect("Home.jsp");
-        else
+        }
+        else {
+        	con.close();
         	response.sendRedirect("Login.jsp");
+        }
    }
    catch (NamingException e) {
 	   e.printStackTrace();
