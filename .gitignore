@@ -1,2 +1,4 @@
 /build/
 WebContent/.DS_Store
+WebContent/META-INF/context.xml
+.DS_Store

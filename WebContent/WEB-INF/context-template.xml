@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/pharma">
+    <Resource name="jdbc/pharma" auth="Container"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://127.0.0.1:3306/REPLACE_WITH_DB_NAME"
+        username="root" password="REPLACE_WITHR_PASSWORD"
+        maxActive="100" maxIdle="30" maxWait="10000"
+        logAbandoned="true" removeAbandoned="true"
+        removeAbandonedTimeout="60" type="javax.sql.DataSource" />
+    <ResourceLink name="jdbc/pharma" global="jdbc/pharma" type="javax.sql.DataSource" />
+</Context>
