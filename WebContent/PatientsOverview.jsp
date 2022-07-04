@@ -29,7 +29,6 @@
                <th>Last</th>
                <th>Username</th>
                <th>Email</th>
-               <th>Pass</th>
                <th>Date of Account Creation</th>
            </tr>
         </thead>
@@ -37,7 +36,11 @@
     	<%
 			for (List<String> patientRow : allPatients) {
 				out.print("<tr>");
-				for (String cell : patientRow) {
+				for (int i = 0; i < patientRow.size(); i++) {
+					if (i == 5) // skip the password column
+						continue;
+					
+					String cell = patientRow.get(i);
 					out.println("<td>" + cell + "</td>");
 				}
 				out.print("</tr>");
