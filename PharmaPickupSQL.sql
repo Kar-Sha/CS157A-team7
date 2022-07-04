@@ -71,3 +71,14 @@ CREATE TABLE prescription (
   (2, 3, 1),
   (3, 2, 3),
   (4, 4, 4);
+
+CREATE TABLE medicinestock (
+  medicine_id INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE,
+  quantity INT,
+  FOREIGN KEY(medicine_id) REFERENCES medicine(medicine_id)) ENGINE=InnoDB;
+
+  INSERT INTO medicinestock(medicine_id, quantity)
+  VALUES(1, 50),
+  (2,13),
+  (3,41),
+  (4,6);
