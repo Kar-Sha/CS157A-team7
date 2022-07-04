@@ -7,7 +7,7 @@
 
 <%
     try{
-        String username = request.getParameter("username");   
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
         
     	InitialContext ic = new InitialContext();
@@ -21,14 +21,14 @@
         pst.setString(2, password);
         ResultSet rs = pst.executeQuery();                        
         if(rs.next())
-           out.println("Valid login credentials");        
+        	response.sendRedirect("Home.jsp");
         else
-           out.println("Invalid login credentials");            
+        	response.sendRedirect("Login.jsp");
    }
    catch (NamingException e) {
 	   e.printStackTrace();
    }
    catch(Exception e){       
-       out.println("Something went wrong !! Please try again");       
+       out.println("Something went wrong. Please try again.");       
    }      
 %>
