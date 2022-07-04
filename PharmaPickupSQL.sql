@@ -29,3 +29,45 @@ CREATE TABLE staff (
 INSERT INTO staff(staff_id, username, password, create_date)
 VALUES(1, 'admin', 'adminpass', '2006-01-01 01:01:01'),
 (2, 'pharmacy', 'pharmapass', '2006-01-02 02:02:02');
+
+CREATE TABLE category (
+  category_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) UNIQUE NOT NULL,
+  PRIMARY KEY (category_id)) ENGINE=InnoDB;
+
+  INSERT INTO category(category_id, name)
+  VALUES(1, 'Fever'),
+  (2, 'Pain Relief'),
+  (3, 'Cough/Sore Throat'),
+  (4, 'Headache'),
+  (5, 'Sleep Aid'),
+  (6, 'Allergies');
+ 
+
+CREATE TABLE medicine (
+  medicine_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) UNIQUE NOT NULL,
+  dosage VARCHAR(60) UNIQUE NOT NULL,
+  category_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (medicine_id),
+  FOREIGN KEY(category_id) REFERENCES category(category_id)) ENGINE=InnoDB;
+
+INSERT INTO medicine(medicine_id, name, dosage, category_id)
+VALUES(1, 'Advil', '200-400mg', 1),
+(2, 'Melatonin', '1-5mg', 5),
+(3, 'Tylenol', '325mg', 2),
+(4, 'Robitussin', '20mg', 3);
+
+CREATE TABLE prescription (
+  prescription_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  medicine_id INT UNSIGNED NOT NULL,
+  patient_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (prescription_id),
+  FOREIGN KEY(medicine_id) REFERENCES medicine(medicine_id),
+  FOREIGN KEY(patient_id) REFERENCES patient(patient_id)) ENGINE=InnoDB;
+
+  INSERT INTO prescription(prescription_id, medicine_id, patient_id)
+  VALUES(1,1, 1),
+  (2, 3, 1),
+  (3, 2, 3),
+  (4, 4, 4);
