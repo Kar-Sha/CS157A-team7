@@ -18,6 +18,6 @@
     </head>
   <body>
     <h1>Home</h1>
-    
+    <input type="button" value="Logout" onclick="window.location='Login.jsp'" >
   </body>
 </html>
