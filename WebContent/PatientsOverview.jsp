@@ -15,6 +15,7 @@
 	List<List<String>> allPatients = dbCon.execute("select * from patient");
 	
 	String methodType = request.getParameter("method_type");
+	String errorMessage = null;
 	
 	// handle delete
  	if (methodType != null && methodType.equals("delete")) {
@@ -24,6 +25,8 @@
 		if (deleted == 1) {
 			// refresh the page to see updated table
 			response.sendRedirect("PatientsOverview.jsp");			
+		} else {
+			errorMessage = "'Error in deleting user.'";
 		}
  	}
 %>
@@ -32,6 +35,18 @@
   <head>
     <title>Patients Overview</title>
     </head>
+    
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			// display an error message if there was an error trying to delete the user
+			if (<%= errorMessage %>) {
+				var errorElement = document.getElementById('error-message');
+				errorElement.innerHTML = <%= errorMessage %>;
+			}
+		})
+	</script>
+   
   <body>
     <h1>Patients Overview</h1>
     <table border="1" cellpadding="5" cellspacing="2">
@@ -71,6 +86,8 @@
     	%>
     	</tbody>
     </table>
+    
+    <p id="error-message" style="color: red"></p>
         
   </body>
 </html>

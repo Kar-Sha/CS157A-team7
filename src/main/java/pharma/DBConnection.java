@@ -117,6 +117,8 @@ public class DBConnection {
            return success;
        } catch(SQLException e) {
            System.err.println(e);
+       } catch(Exception e) {
+           System.err.println(e);
        }
        return 0;
    }
