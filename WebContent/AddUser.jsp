@@ -15,12 +15,6 @@
     	String email = request.getParameter("email");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        out.println("id = " + patient_id);
-        out.println("fn = " + firstName);
-        out.println("ln = " + lastName);
-        out.println("email = " + email);
-        out.println("un = " + username);
-        out.println("pw = " + password);
         int added = dbCon.insert("INSERT INTO patient(patient_id, first_name, last_name, username, email, password, create_date)" +
         "VALUES(" + patient_id + ", '" + firstName + "', '" + lastName + "', '" + username + "', '" + email + "', '" + password + "', now());");
         if (added == 1) {
