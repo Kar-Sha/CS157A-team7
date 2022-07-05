@@ -122,4 +122,60 @@ public class DBConnection {
        }
        return 0;
    }
+
+/**
+ * Executes a insert operation on the MySQL database
+ * @param query the specific SQL statement to be executed for insert
+ * @return 1 if insert operation was successful, 0 otherwise
+ */
+   public static int insert(String query) {
+	   try {
+		   mysqlConnect();
+	   		
+	   		// execute insertion using Statement
+		   Statement statement = con.createStatement();
+		   int success = statement.executeUpdate(query);
+        
+	   		// close connections
+		   statement.close();
+		   closeConnection();
+
+		   return success;
+	   } catch(SQLException e) {
+        System.err.println(e);
+	   } catch(Exception e) {
+        System.err.println(e);
+	   }
+	   return 0;
+	}
+
+   /**
+    * Executes a insert operation on the MySQL database
+    * @param query the specific SQL statement to be executed for insert
+    * @return 1 if insert operation was successful, 0 otherwise
+    */
+      public static int getID(String query) {
+   	   try {
+   		   mysqlConnect();
+   	   		
+   	   		// execute insertion using Statement
+   		   Statement statement = con.createStatement();
+   		   ResultSet result = statement.executeQuery(query);
+   		   int id = 0;
+   		   while(result.next() ) {
+   			   id = result.getInt("patient_id");
+   		   }
+   		   
+   	   		// close connections
+   		   statement.close();
+   		   closeConnection();
+
+   		   return id;
+   	   } catch(SQLException e) {
+           System.err.println(e);
+   	   } catch(Exception e) {
+           System.err.println(e);
+   	   }
+   	   return 0;
+   	}
 }
