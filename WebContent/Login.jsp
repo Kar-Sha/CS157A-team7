@@ -27,6 +27,7 @@
                         <td colspan="2" align="center">
                         	<input type="submit" value="Login" />
                             &nbsp;&nbsp;
+                            <input type="button" value="Register" onclick="window.location='Register.jsp'" >
                         </td>                        
                     </tr>                    
                 </tbody>
