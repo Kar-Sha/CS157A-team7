@@ -96,4 +96,28 @@ public class DBConnection {
 		}
 	   	return null;
    }
+   
+   /**
+    * Executes a delete operation on the MySQL database
+    * @param query the specific SQL statement to be executed for delete
+    * @return 1 if delete operation was successful, 0 otherwise
+    */
+   public static int delete(String query) {
+       try {
+    	   mysqlConnect();
+	   		
+	   		// execute deletion using Statement
+           Statement statement = con.createStatement();
+           int success = statement.executeUpdate(query);
+           
+	   		// close connections
+           statement.close();
+           closeConnection();
+
+           return success;
+       } catch(SQLException e) {
+           System.err.println(e);
+       }
+       return 0;
+   }
 }

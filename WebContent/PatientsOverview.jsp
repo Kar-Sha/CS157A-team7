@@ -13,6 +13,19 @@
 	
 	DBConnection dbCon = new DBConnection();
 	List<List<String>> allPatients = dbCon.execute("select * from patient");
+	
+	String methodType = request.getParameter("method_type");
+	
+	// handle delete
+ 	if (methodType != null && methodType.equals("delete")) {
+		String userId = request.getParameter("user_id");
+		int deleted = dbCon.delete("DELETE FROM patient WHERE (`patient_id` = '"+ userId +"');");
+
+		if (deleted == 1) {
+			// refresh the page to see updated table
+			response.sendRedirect("PatientsOverview.jsp");			
+		}
+ 	}
 %>
 
 <html>
@@ -30,12 +43,16 @@
                <th>Username</th>
                <th>Email</th>
                <th>Date of Account Creation</th>
+               <th></th>
            </tr>
         </thead>
     	<tbody>
     	<%
 			for (List<String> patientRow : allPatients) {
 				out.print("<tr>");
+				
+				// get data for the user in this row
+				String userId = patientRow.get(0);
 				for (int i = 0; i < patientRow.size(); i++) {
 					if (i == 5) // skip the password column
 						continue;
@@ -43,7 +60,13 @@
 					String cell = patientRow.get(i);
 					out.println("<td>" + cell + "</td>");
 				}
-				out.print("</tr>");
+				
+				// put the delete button at the end of the row
+				String deleteButton = "<form method=\"post\" " 
+										+ "action=\"PatientsOverview.jsp?method_type=delete&user_id=" + userId + "\" >"
+										+ "<input name=\"deleteUserBtn\" type=\"submit\" value=\"Remove User\"/>"
+										+"</form>";
+				out.print("<td>" + deleteButton + "</td></tr>");
 			}
     	%>
     	</tbody>
