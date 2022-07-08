@@ -22,7 +22,7 @@
         ResultSet rs = pst.executeQuery();                        
         if(rs.next()) {
         	con.close();
-        	response.sendRedirect("Home.jsp");
+        	response.sendRedirect("Home.jsp?username=" + username);
         }
         else {
         	con.close();
