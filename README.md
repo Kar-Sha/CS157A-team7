@@ -2,7 +2,7 @@
 Group Project
 
 ### Database Setup
-1. Import `PharmaPickupSQL.sql` in your MySQL server.
+1. Import and run `PharmaPickupSQL.sql` in your MySQL server.
 
 ### Context Setup
 1. Create a new file called `context.xml` in the WebContent/META-INF folder.
