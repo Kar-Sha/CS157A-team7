@@ -127,26 +127,24 @@ CREATE TABLE medicine_category (
 
 --Table for patient's prescriptions (Relationship)
 CREATE TABLE prescription (
-  prescription_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   patient_id INT UNSIGNED NOT NULL,
   medicine_id INT UNSIGNED NOT NULL,
   quantity INT,
   approval_status VARCHAR(32) DEFAULT 'Pending',
-  PRIMARY KEY (prescription_id),
   FOREIGN KEY(patient_id) REFERENCES patient(patient_id),
   FOREIGN KEY(medicine_id) REFERENCES medicine(medicine_id)) ENGINE=InnoDB;
 --Data Instances
-  INSERT INTO prescription(prescription_id, patient_id, medicine_id, quantity, approval_status)
-  VALUES(1,1, 1, 3, 'Approved'),
-  (2, 1, 3, 4, 'Approved'),
-  (3, 2, 3, 2, 'Approved'),
-  (4, 4, 4, 1, 'Approved'),
-  (5, 5, 3, 2, 'Approved'),
-  (6, 6, 4, 1, 'Approved'),
-  (7, 7, 10, 20, 'Approved'),
-  (8, 9, 6, 1, 'Approved'),
-  (9, 9, 7, 2, 'Approved'),
-  (10, 9, 8, 1, 'Approved');
+  INSERT INTO prescription(patient_id, medicine_id, quantity, approval_status)
+  VALUES(1, 1, 3, 'Approved'),
+  (1, 3, 4, 'Approved'),
+  (2, 3, 2, 'Approved'),
+  (4, 4, 1, 'Approved'),
+  (5, 3, 2, 'Approved'),
+  (6, 4, 1, 'Approved'),
+  (7, 10, 20, 'Approved'),
+  (9, 6, 1, 'Approved'),
+  (9, 7, 2, 'Approved'),
+  (9, 8, 1, 'Approved');
 
 --Table for medicine stock within different pharmacies (Relationship)
 CREATE TABLE medicine_stock (
