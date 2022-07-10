@@ -167,24 +167,6 @@ CREATE TABLE medicine_stock (
   (9, 9, 25),
   (10, 2, 5);
 
--- Table for ingredients that patients are allergic to (Relationship)
-CREATE TABLE patient_allergies (
-  patient_id INT UNSIGNED NOT NULL,
-  allergy VARCHAR(64) NOT NULL,
-  FOREIGN KEY(patient_id) REFERENCES patient(patient_id)) ENGINE=InnoDB;
--- Data Instances
-INSERT INTO patient_allergies(patient_id, allergy)
-  VALUES(2,'Gluten'),
-  (2, 'Lactose'),
-  (5,'Penicillin'),
-  (6, 'Soy'), 
-  (6, 'Penicillin'),
-  (7, 'Ibuprofen'),
-  (9, 'Egg'),
-  (9, 'Peanut'),
-  (9, 'Paracetamol'),
-  (10, 'Peanut');
-
 -- Table for ingredients (Entity Set)
 CREATE TABLE ingredient (
   ingredient_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -202,6 +184,25 @@ INSERT INTO ingredient(ingredient_id, name)
   (8, 'Paracetamol'),
   (9, 'Atorvastatin'),
   (10, 'Ascorbic acid');
+  
+-- Table for ingredients that patients are allergic to (Relationship)
+CREATE TABLE patient_allergies (
+  patient_id INT UNSIGNED NOT NULL,
+  ingredient_id INT UNSIGNED NOT NULL,
+  FOREIGN KEY(patient_id) REFERENCES patient(patient_id),
+  FOREIGN KEY(ingredient_id) REFERENCES ingredient(ingredient_id)) ENGINE=InnoDB;
+-- Data Instances
+INSERT INTO patient_allergies(patient_id, ingredient_id)
+  VALUES(2, 1),
+  (2, 2),
+  (5, 4),
+  (6, 4), 
+  (6, 6),
+  (7, 3),
+  (9, 2),
+  (9, 4),
+  (9, 7),
+  (10, 8);
 
 -- Table of ingredients within medicines (Relationship)
 CREATE TABLE medicine_ingredients (
