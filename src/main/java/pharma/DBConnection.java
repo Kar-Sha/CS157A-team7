@@ -12,48 +12,31 @@ import com.mysql.jdbc.Driver;
 
 public class DBConnection {
     private static String driver = "com.mysql.jdbc.Driver";
-    private static java.sql.Connection con;
 
     /**
      * starts connection to MySQL database
+     * @return a database connection
+     * @throws Exception 
      */
-    public static void mysqlConnect() {
+    public static Connection mysqlConnect() throws Exception {
         try {
 			InitialContext ic = new InitialContext();
 			DataSource dataSource = (DataSource) ic.lookup("java:/comp/env/jdbc/pharma");
 			Class.forName(driver);
 			
-			con = dataSource.getConnection();
 			System.out.println("Successfully connected to database.");
+			return dataSource.getConnection();
         }
         catch (NamingException e) {
-        	e.printStackTrace();
+        	throw e;
         }
         catch (ClassNotFoundException e) {
-            System.err.println("Couldn't load driver.");
+            throw e;
         }
         catch (SQLException e) {
-            System.err.println("Couldn't connect to database.");
+            throw e;
         }
     }
-
-    /**
-     * closes connection to MySQL database if it's not already closed
-     */
-    public static void closeConnection() {
-        try {
-            if(!con.isClosed()) {
-                con.close();
-                System.out.println("Database closed successfully.");
-            }
-        }
-        catch (NullPointerException e) {
-            System.err.println("Couldn't load driver.");
-        }
-        catch (SQLException e) {
-            System.err.println("Couldn't close database.");
-        }
-   }
    
    /**
     * executes a SQL query
@@ -61,13 +44,10 @@ public class DBConnection {
     * @return the result of the query
     */
    public static List<List<String>> select(String query) {
-	   	try {
-	   		// connect
-	   		mysqlConnect();
-	   		
-	   		// execute
-	   		Statement statement = con.createStatement();
-	   		ResultSet result = statement.executeQuery(query);
+	   	try (Connection con = mysqlConnect(); 
+	   		 Statement statement = con.createStatement(); 
+	   		 ResultSet result = statement.executeQuery(query);
+	   		) {
 
 	   		// get info about result
 	   		ResultSetMetaData md = result.getMetaData();
@@ -84,14 +64,15 @@ public class DBConnection {
 	   	  		}
 	   	  		resultList.add(row);
 	   	  	}
-	   		
-	   		// close connections
-			result.close();
-	   		statement.close();
-		   	closeConnection();
 		   	
 		   	return resultList;
-		} catch (SQLException e) {
+		} catch (NamingException e) {
+			e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+        	System.err.println("Couldn't load driver.");
+        } catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	   	return null;
@@ -103,18 +84,11 @@ public class DBConnection {
     * @return 1 if delete operation was successful, 0 otherwise
     */
    public static int delete(String query) {
-       try {
-    	   mysqlConnect();
-	   		
-	   		// execute deletion using Statement
-           Statement statement = con.createStatement();
-           int success = statement.executeUpdate(query);
-           
-	   		// close connections
-           statement.close();
-           closeConnection();
+       try (Connection con = mysqlConnect(); 
+	   		Statement statement = con.createStatement(); 
+	   	   ) {
 
-           return success;
+           return statement.executeUpdate(query);
        } catch(SQLException e) {
            System.err.println(e);
        } catch(Exception e) {
@@ -129,18 +103,12 @@ public class DBConnection {
  * @return 1 if insert operation was successful, 0 otherwise
  */
    public static int insert(String query) {
-	   try {
-		   mysqlConnect();
-	   		
-	   		// execute insertion using Statement
-		   Statement statement = con.createStatement();
-		   int success = statement.executeUpdate(query);
-        
-	   		// close connections
-		   statement.close();
-		   closeConnection();
+	   // execute insertion using Statement
+	   try (Connection con = mysqlConnect(); 
+		   	Statement statement = con.createStatement();
+		   ) {
 
-		   return success;
+		   return statement.executeUpdate(query);
 	   } catch(SQLException e) {
         System.err.println(e);
 	   } catch(Exception e) {
@@ -155,20 +123,15 @@ public class DBConnection {
     * @return 1 if insert operation was successful, 0 otherwise
     */
       public static int getID(String query) {
-   	   try {
-   		   mysqlConnect();
-   	   		
-   	   		// execute insertion using Statement
-   		   Statement statement = con.createStatement();
-   		   ResultSet result = statement.executeQuery(query);
+   	   try (Connection con = mysqlConnect(); 
+   			Statement statement = con.createStatement();
+   			ResultSet result = statement.executeQuery(query);
+   		   ) {
+   		   
    		   int id = 0;
    		   while(result.next() ) {
    			   id = result.getInt("patient_id");
    		   }
-   		   
-   	   		// close connections
-   		   statement.close();
-   		   closeConnection();
 
    		   return id;
    	   } catch(SQLException e) {
@@ -186,27 +149,25 @@ public class DBConnection {
     public List<Category> getAllCategories() {
     	List<Category> categories = new ArrayList<>();
     	
-    	try {
-	   		// connect
-	   		mysqlConnect();
-	   		
-	   		// execute
-	   		PreparedStatement statement = con.prepareStatement("SELECT * FROM category;");
-	   		ResultSet resultSet = statement.executeQuery();
+    	try (
+    			// connect
+    			Connection con = mysqlConnect(); 
+    			
+    			// execute
+    			PreparedStatement statement = con.prepareStatement("SELECT * FROM category;");
+    			ResultSet resultSet = statement.executeQuery();
+    		) {
 	   		
 	   		// store result by going through the ResultSet one row per iteration
 	   	  	while(resultSet.next()) {
 	   	  		categories.add(new Category(Integer.valueOf(resultSet.getString(1)), resultSet.getString(2)));
 	   	  	}
-	   		
-	   		// close connections
-			resultSet.close();
-	   		statement.close();
-		   	closeConnection();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch(SQLException e) {
+	        System.err.println(e);
+	    } catch(Exception e) {
+            System.err.println(e);
+	    }
   	
     	return categories;
     }
