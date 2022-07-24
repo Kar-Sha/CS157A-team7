@@ -14,13 +14,12 @@
 	// Handle request
 	String methodType = request.getParameter("method_type");
 	
-	List<String> categoriesSelected = null;
+	List<String> categoriesSelected = new ArrayList<>();
 	
 	// handle search
 	if (methodType != null && methodType.equals("search")) {
 		
 		// get the selected categories
-		categoriesSelected = new ArrayList<>();
 		for (Category category : categories) {
 			String onValue = request.getParameter(category.name);
 			
@@ -63,9 +62,14 @@
 			<% 	// display a tag for every category 
 				for (Category category : categories) { 
 					String checkboxId = "checkbox-" + category.name;
+					
+					// to display the tag in color if it was chosen
+					boolean isSelected = categoriesSelected.contains(category.name);
 			%>
 					<div class="checkbox-container">
-						<input type="checkbox" class="tag-checkbox" name="<%= category.name %>" id="<%= checkboxId %>"/>
+						<input type="checkbox" class="tag-checkbox" name="<%= category.name %>" id="<%= checkboxId %>"
+							<% if (isSelected) { %> checked <% } %>
+							/>
 						<p onclick="check('<%= checkboxId %>')"><%= category.name %></p>
 					</div>
 			<% } %>
