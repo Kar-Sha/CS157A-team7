@@ -129,9 +129,9 @@
 	    				for (int colIndex = 0; colIndex < row.size(); colIndex++) {
 	    					String cell = row.get(colIndex);
 	    					
-	    					// Name column
 	    					if (1 == colIndex) {
-	    						out.println("<td><a href='Medicine.jsp' target='_blank' rel='noreferrer noopener'>" + cell + "</a></td>");
+	    						// Name column links to specific Medicine page
+	    						out.println("<td><a href='Medicine.jsp?medicine_id=" + currentMedicineId + "&username=" + user +"' target='_blank' rel='noreferrer noopener'>" + cell + "</a></td>");
 	    					} else {
 	    						out.println("<td>" + cell + "</td>");
 	    					}
