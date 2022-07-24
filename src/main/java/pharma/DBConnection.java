@@ -60,7 +60,7 @@ public class DBConnection {
     * @param query - the raw SQL query as a String that will be executed
     * @return the result of the query
     */
-   public static List<List<String>> execute(String query) {
+   public static List<List<String>> select(String query) {
 	   	try {
 	   		// connect
 	   		mysqlConnect();

@@ -22,7 +22,7 @@
   <body>
     <h1>Welcome, 
     <% String user = request.getParameter("username");
-    List<List<String>> result = dbCon.execute("SELECT first_name FROM patient WHERE username = \"" + user + "\"");
+    List<List<String>> result = dbCon.select("SELECT first_name FROM patient WHERE username = \"" + user + "\"");
     out.print(result.get(0).get(0));
     %>
     </h1>

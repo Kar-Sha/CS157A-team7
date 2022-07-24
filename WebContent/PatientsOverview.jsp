@@ -12,7 +12,7 @@
 	// Page where pharmacy staff can see all patients registered on their system
 	
 	DBConnection dbCon = new DBConnection();
-	List<List<String>> allPatients = dbCon.execute("select * from patient");
+	List<List<String>> allPatients = dbCon.select("select * from patient");
 	
 	String methodType = request.getParameter("method_type");
 	String errorMessage = null;
