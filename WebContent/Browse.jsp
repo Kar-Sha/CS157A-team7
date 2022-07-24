@@ -8,8 +8,7 @@
 <%@ page import="pharma.Category"%>
     
 <%
-	DBConnection dbCon = new DBConnection();
-	List<Category> categories = dbCon.getAllCategories();
+	List<Category> categories = DBConnection.getAllCategories();
 	
 	// Handle request
 	String methodType = request.getParameter("method_type");

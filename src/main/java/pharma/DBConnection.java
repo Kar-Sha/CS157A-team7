@@ -146,7 +146,7 @@ public class DBConnection {
      * gets categories from the Category table
      * @return a list of category objects
      */
-    public List<Category> getAllCategories() {
+    public static List<Category> getAllCategories() {
     	List<Category> categories = new ArrayList<>();
     	
     	try (
