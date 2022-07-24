@@ -14,18 +14,19 @@
 %>
 
 <html>
-  <head>
-    <title>Home</title>
-    </head>
-  <body>
-    <h1>Welcome, 
+	<h1>Home</h1>
+    <body>Welcome to PharmaPickup, 
     <% String user = request.getParameter("username");
     List<List<String>> result = dbCon.select("SELECT first_name FROM patient WHERE username = \"" + user + "\"");
     out.print(result.get(0).get(0));
     %>
-    </h1>
-   	
-   	
-    <input type="button" value="Logout" onclick="window.location='Login.jsp'" >
-  </body>
+    <br>
+    <br>
+    Looking for something new? <input type="button" value="Browse Medicines" onclick="window.location='Browse.jsp'" >
+    </body>
+    <br>
+    <br>
+
 </html>
+
+    <input type="button" value="Logout" onclick="window.location='Login.jsp'" >
