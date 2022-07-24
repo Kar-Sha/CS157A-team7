@@ -29,4 +29,4 @@
 
 </html>
 
-    <input type="button" value="Logout" action="Validate.jsp" onclick="window.location='Login.jsp'" >
+    <input type="button" value="Logout" onclick="window.location='Login.jsp'" >

@@ -95,6 +95,7 @@
 		</div>
 		<br>
 		<input type="submit" value="Search"/>
+		<input type="text" name="username" style="display:none" value="<%=user %>"/> <!-- keeps user info -->
 	</form>
 	
 	
