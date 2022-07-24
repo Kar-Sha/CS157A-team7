@@ -31,7 +31,8 @@ String med_id = request.getParameter("medicine_id");
 
     List<List<String>> result = dbCon.select("SELECT medicine.name, pharmacy.name, location, quantity"
     		+ " FROM pharmacy, medicine, medicine_stock"
-    		+ " WHERE medicine_stock.medicine_id = medicine.medicine_id AND medicine.medicine_id = " + med_id + "");
+    		+ " WHERE medicine_stock.medicine_id = medicine.medicine_id AND medicine_stock.pharmacy_id = pharmacy.pharmacy_id"
+    		+ " AND medicine.medicine_id = " + med_id + "");
     
     for(List<String> row: result) //gets first column of result
 	{
