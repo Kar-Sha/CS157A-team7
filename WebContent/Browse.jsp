@@ -68,7 +68,11 @@
 </script>
 
 </head>
-
+<div>
+	<%String user = request.getParameter("username");%>
+	<input type="button" value="Return to Home" style="float:right" onclick="window.location='Home.jsp?username=<%=user%>'" >
+</div>
+	
 <body>
 	<h2>Medicine Categories</h2>
 	<form method="post" action="Browse.jsp?method_type=search">
@@ -89,7 +93,7 @@
 					</div>
 			<% } %>
 		</div>
-		
+		<br>
 		<input type="submit" value="Search"/>
 	</form>
 	
