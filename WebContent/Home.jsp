@@ -11,8 +11,6 @@
 
 <%
 	DBConnection dbCon = new DBConnection();
-	dbCon.mysqlConnect();
-	dbCon.closeConnection();
 %>
 
 <html>
