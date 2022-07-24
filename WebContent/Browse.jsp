@@ -53,7 +53,7 @@
 <meta charset="UTF-8">
 <title>Browse</title>
 
-<link rel="stylesheet" type="text/css" href="./resources/css/Browse.css"/>
+<link rel="stylesheet" type="text/css" href="./resources/css/Tags.css"/>
 <link rel="stylesheet" type="text/css" href="./resources/css/Table.css"/>
 
 <script>
