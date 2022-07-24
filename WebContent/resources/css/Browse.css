@@ -3,6 +3,7 @@
 .category-list-container {
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 }
 
 .checkbox-container {
@@ -21,6 +22,8 @@
 	border-radius: 20px;
 	background-color: gainsboro;
 	color: dimgray;
+	display: flex;
+	align-items: center;
 	-webkit-user-select: none;    
 	-moz-user-select: none; 
 	-ms-user-select: none; 

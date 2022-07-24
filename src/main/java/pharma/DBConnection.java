@@ -178,4 +178,36 @@ public class DBConnection {
    	   }
    	   return 0;
    	}
+      
+    /**
+     * gets categories from the Category table
+     * @return a list of category objects
+     */
+    public List<Category> getAllCategories() {
+    	List<Category> categories = new ArrayList<>();
+    	
+    	try {
+	   		// connect
+	   		mysqlConnect();
+	   		
+	   		// execute
+	   		PreparedStatement statement = con.prepareStatement("SELECT * FROM category;");
+	   		ResultSet resultSet = statement.executeQuery();
+	   		
+	   		// store result by going through the ResultSet one row per iteration
+	   	  	while(resultSet.next()) {
+	   	  		categories.add(new Category(Integer.valueOf(resultSet.getString(1)), resultSet.getString(2)));
+	   	  	}
+	   		
+	   		// close connections
+			resultSet.close();
+	   		statement.close();
+		   	closeConnection();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+  	
+    	return categories;
+    }
 }

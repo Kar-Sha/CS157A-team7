@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.List"%>
+ 
+<%@ page import="java.sql.*" %>
+<%@ page import="pharma.DBConnection"%>
+<%@ page import="pharma.Category"%>
+    
+<%
+	DBConnection dbCon = new DBConnection();
+	List<Category> categories = dbCon.getAllCategories();
+%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -23,14 +33,16 @@
 
 <body>
 	<div class="category-list-container">
-		<div class="checkbox-container">
-			<input type="checkbox" class="tag-checkbox" name="Fever" id="checkbox-Fever"/>
-			<p onclick="check('checkbox-Fever')">Fever</p>
-		</div>
-		<div class="checkbox-container">
-			<input type="checkbox" class="tag-checkbox" name="Allergies" id="checkbox-Allergies"/>
-			<p onclick="check('checkbox-Allergies')">Allergies</p>
-		</div>
+		
+		<% 	// display a tag for every category 
+			for (Category category : categories) { 
+				String checkboxId = "checkbox-" + category.name;
+		%>
+				<div class="checkbox-container">
+					<input type="checkbox" class="tag-checkbox" name="<%= category.name %>" id="<%= checkboxId %>"/>
+					<p onclick="check('<%= checkboxId %>')"><%= category.name %></p>
+				</div>
+		<% } %>
 	</div>
 </body>
 
