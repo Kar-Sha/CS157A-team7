@@ -39,10 +39,14 @@
                         <td colspan="2" align="center">
                         	<input type="submit" value="Register" />
                             &nbsp;&nbsp;
-                        </td>                        
+                        </td>                       
                     </tr>                    
                 </tbody>
             </table>
+            <html>
+                        	<body>Already have an account? </body>
+                        	</html>
+                        	<input type="submit" value="Back to Login" onclick="window.location='Login.jsp'"/>
             </center>
         </form>
     </body>
