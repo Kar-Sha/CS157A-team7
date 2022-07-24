@@ -14,6 +14,7 @@
 	String methodType = request.getParameter("method_type");
 	
 	List<Integer> categoriesSelected = new ArrayList<>();
+	List<List<String>> medicineData = null;
 	
 	// handle search
 	if (methodType != null && methodType.equals("search")) {
@@ -30,6 +31,20 @@
 			if (onValue.equals("on")) {
 				categoriesSelected.add(category.id);
 			}
+		}
+		
+		// Get medicine_ids
+		String categoryIdsStr = categoriesSelected.toString();
+		// replace with parenthesis with brackets
+		String categoryIdsSql = "(" + categoryIdsStr.substring(1, categoryIdsStr.length() - 1) + ")";
+		List<String> medicineIdsList = DBConnection.getFirstColumn("SELECT medicine_id FROM medicine_category WHERE category_id IN " + categoryIdsSql);
+
+		// Get medicine data
+		if (medicineIdsList.size() == 0) {
+			medicineData = new ArrayList<>();
+		} else {
+			String medicineIdsSql = "(" + String.join(", ", medicineIdsList) + ")";
+			medicineData = DBConnection.select("SELECT * FROM medicine WHERE medicine_id IN " + medicineIdsSql);
 		}
 	}
 %>
@@ -54,8 +69,8 @@
 </head>
 
 <body>
+	<h2>Medicine Categories</h2>
 	<form method="post" action="Browse.jsp?method_type=search">
-		<!-- Medicine Categories -->
 		<div class="category-list-container">
 			
 			<% 	// display a tag for every category 
@@ -74,9 +89,41 @@
 			<% } %>
 		</div>
 		
-		<!-- Search Button -->
 		<input type="submit" value="Search"/>
 	</form>
+	
+	
+	<h1>Medicine</h1>
+	<% if (medicineData == null) { %>
+		<p>Select category filters on medicine and results will be displayed here.</p>
+		
+	<% } else if (medicineData.size() == 0) { %>
+		<p>No medicine matches your category selections.</p>
+		
+	<% } else { %>
+		<table>
+			<thead>
+	           <tr>
+	               <th>Medicine ID</th>
+	               <th>Name</th>
+	               <th>Dosage</th>
+	           </tr>
+	        </thead>
+	    	<tbody>
+	    		<%
+	    			for (List<String> row : medicineData) {
+	    				out.print("<tr>");
+
+	    				for (String cell : row) {
+	    					out.println("<td>" + cell + "</td>");
+	    				}
+	    				out.print("</tr>");
+	    			}
+	    		%>
+			</tbody>
+		</table>
+	<% } %>
+	
 </body>
 
 </html>

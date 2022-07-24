@@ -171,4 +171,33 @@ public class DBConnection {
   	
     	return categories;
     }
+    
+    /**
+     * runs an SQL query and returns the first column of the result. 
+     * @param query String of SQL statement to be executed
+     */
+    public static List<String> getFirstColumn(String query) {
+    	List<String> result = new ArrayList<>();
+    	
+    	try (   // connect
+    			Connection con = mysqlConnect(); 
+    			
+    			// execute
+    			PreparedStatement statement = con.prepareStatement(query);
+    			ResultSet resultSet = statement.executeQuery();
+    		) {
+	   		
+	   		// store result by going through the ResultSet one row per iteration
+	   	  	while(resultSet.next()) {
+	   	  		result.add(resultSet.getString(1));
+	   	  	}
+
+		} catch(SQLException e) {
+	        System.err.println(e);
+	    } catch(Exception e) {
+            System.err.println(e);
+	    }
+  	
+    	return result;
+    }
 }
