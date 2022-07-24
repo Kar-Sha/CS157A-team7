@@ -123,8 +123,18 @@
 	    				String currentMedicineId = row.get(0);
 
 	    				// display medicine data
-	    				for (String cell : row) {
+/* 	    				for (String cell : row) {
 	    					out.println("<td>" + cell + "</td>");
+	    				} */
+	    				for (int colIndex = 0; colIndex < row.size(); colIndex++) {
+	    					String cell = row.get(colIndex);
+	    					
+	    					// Name column
+	    					if (1 == colIndex) {
+	    						out.println("<td><a href='Medicine.jsp' target='_blank' rel='noreferrer noopener'>" + cell + "</a></td>");
+	    					} else {
+	    						out.println("<td>" + cell + "</td>");
+	    					}
 	    				}
 	    				
 	    				// get categories for this medicine
