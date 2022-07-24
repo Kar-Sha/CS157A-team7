@@ -108,16 +108,31 @@
 	               <th>Medicine ID</th>
 	               <th>Name</th>
 	               <th>Dosage</th>
+	               <th>Categories</th>
 	           </tr>
 	        </thead>
 	    	<tbody>
 	    		<%
 	    			for (List<String> row : medicineData) {
 	    				out.print("<tr>");
+	    				String currentMedicineId = row.get(0);
 
+	    				// display medicine data
 	    				for (String cell : row) {
 	    					out.println("<td>" + cell + "</td>");
 	    				}
+	    				
+	    				// get categories for this medicine
+	    				List<String> categoryNames = DBConnection.getFirstColumn(
+	    					"SELECT category.name FROM category, medicine_category WHERE medicine_category.medicine_id = " + currentMedicineId + " AND medicine_category.category_id = category.category_id;");
+	    				
+	    				// display category names in separate cell
+	    				out.print("<td>");
+	    				for (String categoryName : categoryNames) {
+	    					out.print("<p>" + categoryName + "</p>");
+	    				}
+	    				out.print("</td>");
+	    				
 	    				out.print("</tr>");
 	    			}
 	    		%>
