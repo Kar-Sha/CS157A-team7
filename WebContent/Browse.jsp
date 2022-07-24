@@ -10,6 +10,30 @@
 <%
 	DBConnection dbCon = new DBConnection();
 	List<Category> categories = dbCon.getAllCategories();
+	
+	// Handle request
+	String methodType = request.getParameter("method_type");
+	
+	List<String> categoriesSelected = null;
+	
+	// handle search
+	if (methodType != null && methodType.equals("search")) {
+		
+		// get the selected categories
+		categoriesSelected = new ArrayList<>();
+		for (Category category : categories) {
+			String onValue = request.getParameter(category.name);
+			
+			if (onValue == null) {
+				continue;
+			}
+			
+			// add to the list if this category was selected
+			if (onValue.equals("on")) {
+				categoriesSelected.add(category.name);
+			}
+		}
+	}
 %>
 <html>
 <head>
@@ -32,18 +56,24 @@
 </head>
 
 <body>
-	<div class="category-list-container">
+	<form method="post" action="Browse.jsp?method_type=search">
+		<!-- Medicine Categories -->
+		<div class="category-list-container">
+			
+			<% 	// display a tag for every category 
+				for (Category category : categories) { 
+					String checkboxId = "checkbox-" + category.name;
+			%>
+					<div class="checkbox-container">
+						<input type="checkbox" class="tag-checkbox" name="<%= category.name %>" id="<%= checkboxId %>"/>
+						<p onclick="check('<%= checkboxId %>')"><%= category.name %></p>
+					</div>
+			<% } %>
+		</div>
 		
-		<% 	// display a tag for every category 
-			for (Category category : categories) { 
-				String checkboxId = "checkbox-" + category.name;
-		%>
-				<div class="checkbox-container">
-					<input type="checkbox" class="tag-checkbox" name="<%= category.name %>" id="<%= checkboxId %>"/>
-					<p onclick="check('<%= checkboxId %>')"><%= category.name %></p>
-				</div>
-		<% } %>
-	</div>
+		<!-- Search Button -->
+		<input type="submit" value="Search"/>
+	</form>
 </body>
 
 </html>
