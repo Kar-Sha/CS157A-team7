@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.category-list-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.checkbox-container {
+	width: fit-content;
+	display: flex;
+}
+
+.tag-checkbox {
+	display: none;
+}
+
+.tag-checkbox + p {
+	padding: 5px 20px;
+	margin: 5px;
+	border: 1px solid white;
+	border-radius: 20px;
+	background-color: gainsboro;
+	color: dimgray;
+	-webkit-user-select: none;    
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+	user-select: none; 
+}
+
+.tag-checkbox:checked + p {
+	background-color: lightcyan;
+	border: 1px solid darkcyan;
+	color: darkcyan;
+}
+	
+.tag-checkbox + p:hover {
+	cursor: pointer;
+}
