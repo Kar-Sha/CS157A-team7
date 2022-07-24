@@ -28,9 +28,10 @@
     	<tbody>
 <% String user = request.getParameter("username");
 String med_id = request.getParameter("medicine_id");
+
     List<List<String>> result = dbCon.select("SELECT medicine.name, pharmacy.name, location, quantity"
     		+ " FROM pharmacy, medicine, medicine_stock"
-    		+ " WHERE medicine_stock.medicine_id = medicine.medicine_id AND medicine.medicine_id = 1;");
+    		+ " WHERE medicine_stock.medicine_id = medicine.medicine_id AND medicine.medicine_id = " + med_id + "");
     
     for(List<String> row: result) //gets first column of result
 	{
@@ -59,7 +60,7 @@ String med_id = request.getParameter("medicine_id");
 <%
 	List<List<String>> ingredients = dbCon.select("SELECT ingredient.ingredient_id, name"
 			+ " FROM ingredient, medicine_ingredients"
-			+ " WHERE medicine_id = 1 AND ingredient.ingredient_id = medicine_ingredients.ingredient_id;");
+			+ " WHERE medicine_id = " + med_id + " AND ingredient.ingredient_id = medicine_ingredients.ingredient_id;");
 	for(List<String> row: ingredients) //gets first column of result
 	{
    		out.print("<tr>");
