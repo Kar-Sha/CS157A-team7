@@ -131,7 +131,7 @@ CREATE TABLE prescription (
   medicine_id INT UNSIGNED NOT NULL,
   quantity INT,
   approval_status VARCHAR(32) DEFAULT 'Pending',
-  FOREIGN KEY(patient_id) REFERENCES patient(patient_id),
+  FOREIGN KEY(patient_id) REFERENCES patient(patient_id) ON DELETE CASCADE,
   FOREIGN KEY(medicine_id) REFERENCES medicine(medicine_id)) ENGINE=InnoDB;
 -- Data Instances
   INSERT INTO prescription(patient_id, medicine_id, quantity, approval_status)
@@ -189,7 +189,7 @@ INSERT INTO ingredient(ingredient_id, name)
 CREATE TABLE patient_allergies (
   patient_id INT UNSIGNED NOT NULL,
   ingredient_id INT UNSIGNED NOT NULL,
-  FOREIGN KEY(patient_id) REFERENCES patient(patient_id),
+  FOREIGN KEY(patient_id) REFERENCES patient(patient_id) ON DELETE CASCADE,
   FOREIGN KEY(ingredient_id) REFERENCES ingredient(ingredient_id)) ENGINE=InnoDB;
 -- Data Instances
 INSERT INTO patient_allergies(patient_id, ingredient_id)
