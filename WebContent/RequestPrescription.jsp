@@ -20,17 +20,20 @@
     	String pharmacy_id = request.getParameter("pharmacy_id");
     	String quantity = request.getParameter("quantity");
     	
+ 
         int added = DBConnection.insert("INSERT INTO prescription(patient_id, medicine_id, quantity)" +
         "VALUES(" + patient_id + ", '" + med_id + "', " + quantity +");");
         
         int updated = DBConnection.update("UPDATE medicine_stock SET quantity = quantity -" + quantity + " WHERE pharmacy_id =" + pharmacy_id + " ;");
         
-        if (added == 1 && updated < 1) {
+        if (added == 0 || updated < 1) {
     		// error
-    		
+        	response.sendRedirect("Medicine.jsp?username=" + username + "&medicine_id=" + med_id);		
     	} 
-		// back
-		response.sendRedirect("Medicine.jsp?username=" + username + "&medicine_id=" + med_id);			
+        else{
+        	response.sendRedirect("Home.jsp?username=" + username);
+        }
+			
      }
 	catch(Exception e) {
 		out.println("Somthing went wrong. Please try again.");
