@@ -19,8 +19,10 @@
 <table border="1" cellpadding="5" cellspacing="2">
     	<thead>
            <tr>
-               <th>Medicine</th>
-               <th>Pharmacy</th>
+               <th>Medicine ID</th>
+               <th>Medicine Name</th>
+               <th>Pharmacy ID</th>
+               <th>Pharmacy Name</th>
                <th>Location</th>
                <th>Quantity</th>
                <th>Request Prescription</th>
@@ -30,7 +32,7 @@
 <% String user = request.getParameter("username");
 String med_id = request.getParameter("medicine_id");
 
-    List<List<String>> result = dbCon.select("SELECT medicine.name, pharmacy.name, location, quantity"
+    List<List<String>> result = dbCon.select("SELECT medicine.medicine_id, medicine.name, pharmacy.pharmacy_id, pharmacy.name, location, quantity"
     		+ " FROM pharmacy, medicine, medicine_stock"
     		+ " WHERE medicine_stock.medicine_id = medicine.medicine_id AND medicine_stock.pharmacy_id = pharmacy.pharmacy_id"
     		+ " AND medicine.medicine_id = " + med_id + "");
@@ -38,16 +40,21 @@ String med_id = request.getParameter("medicine_id");
     for(List<String> row: result) //gets first column of result
 	{
     	out.print("<tr>");
-    	String current = row.get(0);
+    	String medicineId = row.get(0);
+    	String pharmacyId = row.get(2);
     	for (String cell : row) 
     	{
 			out.println("<td>" + cell + "</td>");
 		}
-    	String requestButton = "<form method=\"post\" " 
-				+ "action=\"Medicine.jsp?username=" + user + "\" >"
-				+ "<input name=\"reqUserBtn\" type=\"submit\" value=\"Request\"/>"
-				+"</form>";
-out.print("<td>" + requestButton + "</td></tr>");
+    %>
+    	<!-- Request Prescription button -->
+    	<td>
+    		<form method="post" action="RequestPrescription.jsp?username=<%=user + "&medicine_id=" + medicineId + "&pharmacy_id=" + pharmacyId %>">
+    			<input name="quantity" type="number" min="1">
+    			<input name="reqUserBtn" type="submit" value="Request"/>
+    		</form>
+    	</td>
+    <% 
     	out.print("</tr>");
     	
 	}
