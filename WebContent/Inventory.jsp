@@ -35,9 +35,28 @@
    		<% 
    			for (List<String> row : inventoryData) {
    				out.print("<tr>");
+   				String medicineId = row.get(0);
    				
-   				for (String cell : row) {
-   					out.print("<td>" + cell + "</td>");
+   				for (int colIndex = 0; colIndex < row.size(); colIndex++) {
+   					out.print("<td>");
+   					
+   					String cell = row.get(colIndex);
+   					
+   					// Quantity column will have an update ability
+   					if (colIndex == 2) { 
+   						String quantity = row.get(colIndex);
+   					%>
+   						<form method="post" 
+   							action="UpdateQuantity.jsp?medicine_id=<%= medicineId + "&pharmacy_id=" + pharmacyId %>">
+   							<input type="number" min=1 name="quantity" value="<%= quantity %>">
+   							<input type="submit" value="Update">
+   						</form>
+   					<% 
+   						continue;
+   					}
+   					
+   					out.print(cell);
+   					out.print("</td>");
    				}
    				out.print("</tr>");
    			}
