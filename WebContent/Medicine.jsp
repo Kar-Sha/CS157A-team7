@@ -55,6 +55,8 @@ String med_id = request.getParameter("medicine_id");
     	{
 			out.println("<td>" + cell + "</td>");
 		}
+    	
+    	if (Integer.parseInt(stockQuantityStr) > 0) {
     %>
     	<!-- Request Prescription button -->
     	<td>
@@ -64,7 +66,9 @@ String med_id = request.getParameter("medicine_id");
     			<input name="reqUserBtn" type="submit" value="Request"/>
     		</form>
     	</td>
-    <% 
+    <% } else {
+    		out.print("<td>Out of stock</td>");
+    	}
     	out.print("</tr>");
     	
 	}
