@@ -23,6 +23,7 @@
                <th>Pharmacy</th>
                <th>Location</th>
                <th>Quantity</th>
+               <th>Request Prescription</th>
            </tr>
         </thead>
     	<tbody>
@@ -42,7 +43,13 @@ String med_id = request.getParameter("medicine_id");
     	{
 			out.println("<td>" + cell + "</td>");
 		}
+    	String requestButton = "<form method=\"post\" " 
+				+ "action=\"Medicine.jsp?username=" + user + "\" >"
+				+ "<input name=\"reqUserBtn\" type=\"submit\" value=\"Request\"/>"
+				+"</form>";
+out.print("<td>" + requestButton + "</td></tr>");
     	out.print("</tr>");
+    	
 	}
 %>
 	</tbody>
