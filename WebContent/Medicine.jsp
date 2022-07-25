@@ -9,15 +9,11 @@
 <%@ page import="pharma.DBConnection"%>
 <head>
 <title>Medicine</title>
+<link rel="stylesheet" type="text/css" href="./resources/css/Table.css"/>
 </head>
 <body>
-<link rel="stylesheet" type="text/css" href="./resources/css/Table.css"/>
-
-<%
-	DBConnection dbCon = new DBConnection();
-%>
 <h1>Locations Available</h1>
-<table border="1" cellpadding="5" cellspacing="2">
+<table>
     	<thead>
            <tr>
                <th>Medicine ID</th>
@@ -33,14 +29,14 @@
 <% String user = request.getParameter("username");
 String med_id = request.getParameter("medicine_id");
 
-    List<List<String>> result = dbCon.select("SELECT medicine.medicine_id, medicine.name, pharmacy.pharmacy_id, pharmacy.name, location, quantity"
+    List<List<String>> result = DBConnection.select("SELECT medicine.medicine_id, medicine.name, pharmacy.pharmacy_id, pharmacy.name, location, quantity"
     		+ " FROM pharmacy, medicine, medicine_stock"
     		+ " WHERE medicine_stock.medicine_id = medicine.medicine_id AND medicine_stock.pharmacy_id = pharmacy.pharmacy_id"
     		+ " AND medicine.medicine_id = " + med_id + "");
     
     for(List<String> row: result) //gets first column of result
 	{
-    	out.print("<tr>");
+    	%> <tr> <%
     	String medicineId = row.get(0);
     	String pharmacyId = row.get(2);
     	for (String cell : row) 
@@ -65,7 +61,7 @@ String med_id = request.getParameter("medicine_id");
 <br>
 <br>
 <h1>Ingredients</h1>
-<table border="1" cellpadding="5" cellspacing="2">
+<table>
     	<thead>
            <tr>
                <th>Ingredient ID</th>
@@ -74,7 +70,7 @@ String med_id = request.getParameter("medicine_id");
         </thead>
     	<tbody>
 <%
-	List<List<String>> ingredients = dbCon.select("SELECT ingredient.ingredient_id, name"
+	List<List<String>> ingredients = DBConnection.select("SELECT ingredient.ingredient_id, name"
 			+ " FROM ingredient, medicine_ingredients"
 			+ " WHERE medicine_id = " + med_id + " AND ingredient.ingredient_id = medicine_ingredients.ingredient_id;");
 	for(List<String> row: ingredients) //gets first column of result
