@@ -15,6 +15,7 @@
 
 <html>
 <Title>Home</Title>
+<link rel="stylesheet" type="text/css" href="./resources/css/Table.css"/>
    <input type="button" value="Logout" style="float:right" onclick="window.location='Login.jsp'" >
 	<h1>Home</h1>
     <body>Welcome to PharmaPickup, 
