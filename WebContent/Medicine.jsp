@@ -10,6 +10,17 @@
 <head>
 <title>Medicine</title>
 <link rel="stylesheet" type="text/css" href="./resources/css/Table.css"/>
+<script>
+	// checks if requested amount is available
+	function validateRequest(stockQuantity) {
+ 	    var desiredQuantity = document.forms["requestPrescriptionForm"]["quantity"].value;
+	    if ( stockQuantity - desiredQuantity < 0 ) {
+	       alert("The quantity you requested is not available. Please reduce your desired quantity.");
+	       return false;
+	    }
+	    return true;
+ 	}
+</script>
 </head>
 <body>
 <h1>Locations Available</h1>
@@ -39,6 +50,7 @@ String med_id = request.getParameter("medicine_id");
     	%> <tr> <%
     	String medicineId = row.get(0);
     	String pharmacyId = row.get(2);
+    	String stockQuantityStr = row.get(5);
     	for (String cell : row) 
     	{
 			out.println("<td>" + cell + "</td>");
@@ -46,7 +58,8 @@ String med_id = request.getParameter("medicine_id");
     %>
     	<!-- Request Prescription button -->
     	<td>
-    		<form method="post" action="RequestPrescription.jsp?username=<%=user + "&medicine_id=" + medicineId + "&pharmacy_id=" + pharmacyId %>">
+    		<form name="requestPrescriptionForm" method="post" onsubmit="return validateRequest(<%= stockQuantityStr %>)" 
+    			action="RequestPrescription.jsp?username=<%=user + "&medicine_id=" + medicineId + "&pharmacy_id=" + pharmacyId %>">
     			<input name="quantity" type="number" min="1">
     			<input name="reqUserBtn" type="submit" value="Request"/>
     		</form>
