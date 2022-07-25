@@ -118,6 +118,25 @@ public class DBConnection {
 	}
 
    /**
+    * Executes a update operation on the MySQL database
+    * @param query the specific SQL statement to be executed for update
+    * @return 1 if update operation was successful, 0 otherwise
+    */
+      public static int update(String query) {
+   	   // execute insertion using Statement
+   	   try (Connection con = mysqlConnect(); 
+   		   	Statement statement = con.createStatement();
+   		   ) {
+
+   		   return statement.executeUpdate(query);
+   	   } catch(SQLException e) {
+           System.err.println(e);
+   	   } catch(Exception e) {
+           System.err.println(e);
+   	   }
+   	   return 0;
+   	}
+   /**
     * Executes a insert operation on the MySQL database
     * @param query the specific SQL statement to be executed for insert
     * @return 1 if insert operation was successful, 0 otherwise
