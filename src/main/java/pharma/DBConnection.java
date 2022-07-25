@@ -137,9 +137,9 @@ public class DBConnection {
    	   return 0;
    	}
    /**
-    * Executes a insert operation on the MySQL database
+    * Executes a getID operation on the MySQL database
     * @param query the specific SQL statement to be executed for insert
-    * @return 1 if insert operation was successful, 0 otherwise
+    * @return >0 if insert operation was successful, 0 otherwise
     */
       public static int getID(String query) {
    	   try (Connection con = mysqlConnect(); 
@@ -219,4 +219,28 @@ public class DBConnection {
   	
     	return result;
     }
+    
+      /**
+       * Executes a getFirstName operation on the MySQL database
+       * @param query the specific SQL statement to be executed for insert
+       * @return first name if insert operation was successful, null otherwise
+       */
+         public static String getFirstName(String query) {
+      	   try {
+      		   Connection con = mysqlConnect();
+      		   Statement statement = con.createStatement();
+      		   ResultSet result = statement.executeQuery(query);
+      		   String firstName = "";
+      		   while(result.next()) {
+      			   firstName = result.getString("first_name");
+      		   }
+
+      		   return firstName;
+      	   } catch(SQLException e) {
+              System.err.println(e);
+      	   } catch(Exception e) {
+              System.err.println(e);
+      	   }
+      	   return "";
+      	}
 }

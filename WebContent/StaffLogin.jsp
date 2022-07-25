@@ -6,7 +6,7 @@
         <title>Login with JSP</title>
     </head>
     <body>
-        <form method="post" action="Validate.jsp">
+        <form method="post" action="StaffValidate.jsp">
             <center>
             <table border="1" cellpadding="5" cellspacing="2">
                 <thead>
@@ -26,10 +26,6 @@
                     <tr>
                         <td colspan="2" align="center">
                         	<input type="submit" value="Login" />
-                            &nbsp;&nbsp;
-                            <input type="button" value="Register" onclick="window.location='Register.jsp'" >
-                            &nbsp;&nbsp;
-                            <input type="button" value="Staff" onclick="window.location='StaffLogin.jsp'" >
                         </td>                        
                     </tr>                    
                 </tbody>

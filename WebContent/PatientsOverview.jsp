@@ -76,12 +76,17 @@
 					out.println("<td>" + cell + "</td>");
 				}
 				
+				String prescriptionButton = "<form method=\"post\" " 
+						+ "action=\"PatientPrescription.jsp?user_id=" + userId + "\" >"
+						+ "<input name=\"prescriptionBtn\" type=\"submit\" value=\"Presciption List\"/>"
+						+"</form>";
+				
 				// put the delete button at the end of the row
 				String deleteButton = "<form method=\"post\" " 
 										+ "action=\"PatientsOverview.jsp?method_type=delete&user_id=" + userId + "\" >"
 										+ "<input name=\"deleteUserBtn\" type=\"submit\" value=\"Remove User\"/>"
 										+"</form>";
-				out.print("<td>" + deleteButton + "</td></tr>");
+				out.print("<td>" + prescriptionButton + "&nbsp;&nbsp;" + deleteButton + "</td></tr>");
 			}
     	%>
     	</tbody>
