@@ -6,7 +6,7 @@
 <%@ page import="pharma.DBConnection"%>
 
 <%
-	int pharmacyId = 1;
+	String pharmacyId = request.getParameter("pharmacy_id");
 	
 	List<List<String>> inventoryData = DBConnection.select("SELECT * "
 		+ " FROM medicine_stock JOIN medicine USING(medicine_id)"

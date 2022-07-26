@@ -16,13 +16,15 @@
         Class.forName("com.mysql.jdbc.Driver");
         con = dataSource.getConnection();    
         
-        PreparedStatement pst = con.prepareStatement("SELECT username, password FROM staff WHERE username=? and password=?");
+        PreparedStatement pst = con.prepareStatement("SELECT username, password, pharmacy_id FROM staff WHERE username=? and password=?");
         pst.setString(1, username);
         pst.setString(2, password);
         ResultSet rs = pst.executeQuery();                        
         if(rs.next()) {
+        	
+        	String pharmacy_id = rs.getString(3);
         	con.close();
-        	response.sendRedirect("PatientsOverview.jsp");
+        	response.sendRedirect("Inventory.jsp?pharmacy_id=" + pharmacy_id);
         }
         else {
         	con.close();
