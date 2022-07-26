@@ -19,7 +19,7 @@
         "VALUES(" + patient_id + ", '" + firstName + "', '" + lastName + "', '" + username + "', '" + email + "', '" + password + "', now());");
         if (added == 1) {
     		// refresh the page to see updated table
-    		response.sendRedirect("PatientsOverview.jsp");			
+    		response.sendRedirect("Login.jsp");			
     	} else {
     		out.println("couldn't register");
     	}
