@@ -226,10 +226,9 @@ public class DBConnection {
        * @return first name if insert operation was successful, null otherwise
        */
          public static String getFirstName(String query) {
-      	   try {
-      		   Connection con = mysqlConnect();
-      		   Statement statement = con.createStatement();
-      		   ResultSet result = statement.executeQuery(query);
+      	   try (Connection con = mysqlConnect();
+          		   Statement statement = con.createStatement();
+          		   ResultSet result = statement.executeQuery(query);) {
       		   String firstName = "";
       		   while(result.next()) {
       			   firstName = result.getString("first_name");
