@@ -20,6 +20,8 @@
 	<jsp:include page='HeaderPatient.jsp'>
 	    <jsp:param name="username" value="<%=user%>"/>
 	</jsp:include>
+	
+	<div class="content-body-container">
 
 	<h1>Home</h1>
     <body>Welcome to PharmaPickup, 
@@ -30,7 +32,7 @@
     <br>
     <br>
     <h1>Approved Prescriptions</h1>
-<table border="1" cellpadding="5" cellspacing="2">
+<table>
     	<thead>
            <tr>
                <th>Medicine</th>
@@ -61,7 +63,7 @@
 </table>
 
   <h1>Pending Prescriptions</h1>
-<table border="1" cellpadding="5" cellspacing="2">
+<table>
     	<thead>
            <tr>
                <th>Medicine</th>
@@ -91,7 +93,7 @@
     </body>
     <br>
     <br>
-
+	</div>
 </html>
 
  

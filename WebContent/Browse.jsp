@@ -75,8 +75,15 @@
 </jsp:include>
 	
 <body>
-	<h2>Medicine Categories</h2>
+<div class="content-body-container">
+	<br/>
 	<form method="post" action="Browse.jsp?method_type=search">
+		<div>
+			<h2 style="display: inline;">Medicine Categories</h2>&nbsp;&nbsp;
+			<input type="submit" value="Search" />
+		</div>
+		<br/>
+
 		<div class="category-list-container">
 			
 			<% 	// display a tag for every category 
@@ -95,7 +102,6 @@
 			<% } %>
 		</div>
 		<br>
-		<input type="submit" value="Search"/>
 		<input type="text" name="username" style="display:none" value="<%=user %>"/> <!-- keeps user info -->
 	</form>
 	
@@ -155,7 +161,7 @@
 			</tbody>
 		</table>
 	<% } %>
-	
+</div>
 </body>
 
 </html>
