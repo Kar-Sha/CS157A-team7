@@ -19,6 +19,11 @@
 <title>Inventory</title>
 <link rel="stylesheet" type="text/css" href="./resources/css/Table.css"/>
 </head>
+
+<jsp:include page='HeaderStaff.jsp'>
+    <jsp:param name="pharmacy_id" value="<%=pharmacyId%>"/>
+</jsp:include>
+
 <body>
 	<h1>Inventory</h1>
 	<table>

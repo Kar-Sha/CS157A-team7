@@ -9,6 +9,8 @@
 <%@ page import="pharma.DBConnection"%>
 
 <%
+	String pharmacy_id = request.getParameter("pharmacy_id");
+
 	// Page where pharmacy staff can see all patients registered on their system
 	
 	DBConnection dbCon = new DBConnection();
@@ -48,6 +50,11 @@
 	</script>
    
   <body>
+
+<jsp:include page='HeaderStaff.jsp'>
+    <jsp:param name="pharmacyId" value="<%=pharmacy_id%>"/>
+</jsp:include>
+  
     <h1>Patients Overview</h1>
     <table border="1" cellpadding="5" cellspacing="2">
     	<thead>
