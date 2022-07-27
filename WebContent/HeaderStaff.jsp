@@ -4,6 +4,7 @@
 %>
 
 <link rel="stylesheet" type="text/css" href="./resources/css/Header.css"/>
+<link rel="stylesheet" type="text/css" href="./resources/css/PharmaTheme.css"/>
 
 <div class="header">
 	<div class="links">

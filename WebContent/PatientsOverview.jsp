@@ -36,6 +36,7 @@
 <html>
   <head>
     <title>Patients Overview</title>
+    <link rel="stylesheet" type="text/css" href="./resources/css/Table.css"/>
     </head>
     
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
@@ -51,12 +52,14 @@
    
   <body>
 
-<jsp:include page='HeaderStaff.jsp'>
-    <jsp:param name="pharmacyId" value="<%=pharmacy_id%>"/>
-</jsp:include>
+  <jsp:include page='HeaderStaff.jsp'>
+      <jsp:param name="pharmacyId" value="<%=pharmacy_id%>"/>
+  </jsp:include>
+	
+  <div class="content-body-container">
   
     <h1>Patients Overview</h1>
-    <table border="1" cellpadding="5" cellspacing="2">
+    <table>
     	<thead>
            <tr>
                <th>Patient ID</th>
@@ -101,6 +104,7 @@
     
     <p id="error-message" style="color: red"></p>
     <input type="button" value="Logout" onclick="window.location='Login.jsp'" >
-        
+    
+  </div>
   </body>
 </html>

@@ -25,6 +25,7 @@
 </jsp:include>
 
 <body>
+  <div class="content-body-container">
 	<h1>Inventory</h1>
 	<table>
     	<thead>
@@ -71,5 +72,6 @@
 	
 	<br />
 	<input type="button" value="Patients Overview" onclick="window.location='PatientsOverview.jsp'" >
+  </div>
 </body>
 </html>
