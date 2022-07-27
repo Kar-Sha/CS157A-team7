@@ -103,8 +103,6 @@
     </table>
     
     <p id="error-message" style="color: red"></p>
-    <input type="button" value="Logout" onclick="window.location='Login.jsp'" >
-    
   </div>
   </body>
 </html>

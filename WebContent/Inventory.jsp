@@ -69,9 +69,6 @@
    		%>
 		</tbody>
 	</table>
-	
-	<br />
-	<input type="button" value="Patients Overview" onclick="window.location='PatientsOverview.jsp'" >
   </div>
 </body>
 </html>
