@@ -68,10 +68,11 @@
 </script>
 
 </head>
-<div>
-	<%String user = request.getParameter("username");%>
-	<input type="button" value="Return to Home" style="float:right" onclick="window.location='Home.jsp?username=<%=user%>'" >
-</div>
+<%String user = request.getParameter("username");%>
+
+<jsp:include page='HeaderPatient.jsp'>
+    <jsp:param name="username" value="<%=user%>"/>
+</jsp:include>
 	
 <body>
 	<h2>Medicine Categories</h2>

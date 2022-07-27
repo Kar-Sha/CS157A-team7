@@ -11,15 +11,19 @@
 
 <%
 	DBConnection dbCon = new DBConnection();
+	String user = request.getParameter("username");
 %>
 
 <html>
 <Title>Home</Title>
 <link rel="stylesheet" type="text/css" href="./resources/css/Table.css"/>
-   <input type="button" value="Logout" style="float:right" onclick="window.location='Login.jsp'" >
+	<jsp:include page='HeaderPatient.jsp'>
+	    <jsp:param name="username" value="<%=user%>"/>
+	</jsp:include>
+
 	<h1>Home</h1>
     <body>Welcome to PharmaPickup, 
-    <% String user = request.getParameter("username");
+    <% 
     List<List<String>> result = dbCon.select("SELECT first_name FROM patient WHERE username = \"" + user + "\"");
     out.print(result.get(0).get(0));
     %>
