@@ -88,7 +88,7 @@
 				
 				String prescriptionButton = "<form method=\"post\" " 
 						+ "action=\"PatientPrescription.jsp?user_id=" + userId + "\" >"
-						+ "<input name=\"prescriptionBtn\" type=\"submit\" value=\"Presciption List\"/>"
+						+ "<input name=\"prescriptionBtn\" type=\"submit\" value=\"Prescription List\"/>"
 						+"</form>";
 				
 				// put the delete button at the end of the row
