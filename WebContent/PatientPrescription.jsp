@@ -76,7 +76,19 @@
 	</h1>
     <br>
     <br>
-    <h1>Approved Prescriptions</h1>
+    <h1><% out.print(firstName);%>'s Approved Prescriptions</h1>
+    <%
+    List<List<String>> prescription = dbCon.select("SELECT name, quantity"
+			+ " FROM medicine, prescription"
+			+ " WHERE prescription.medicine_id = medicine.medicine_id AND approval_status = 'Approved' AND patient_id =\"" + userID + "\"");
+    
+    if(prescription.size() == 0)
+	{
+		out.print("This User has no Active Prescriptions");
+	}
+	else
+	{
+    %>
 <table>
     	<thead>
            <tr>
@@ -86,9 +98,7 @@
         </thead>
     	<tbody>
 <%
-	List<List<String>> prescription = dbCon.select("SELECT name, quantity"
-			+ " FROM medicine, prescription"
-			+ " WHERE prescription.medicine_id = medicine.medicine_id AND approval_status = 'Approved' AND patient_id =\"" + userID + "\"");
+	
 	for(List<String> row: prescription) //gets first column of result
 	{
    		out.print("<tr>");
@@ -102,8 +112,24 @@
 %>
 	</tbody>
 </table>
+<%
+}
+%>
 
-  <h1>Pending Prescriptions</h1>
+<br>
+<br>
+  <h1><% out.print(firstName);%>'s Pending Prescriptions</h1>
+  <%
+	List<List<String>> pend_prescription = dbCon.select("SELECT medicine.medicine_id, name, quantity"
+			+ " FROM medicine, prescription"
+			+ " WHERE prescription.medicine_id = medicine.medicine_id AND approval_status = 'Pending' AND patient_id =\"" + userID + "\"");
+  if(pend_prescription.size() == 0)
+  {
+ 	 out.print("This User has no Pending Prescriptions");
+  }
+  else
+  {
+  %>
 <table>
     	<thead>
            <tr>
@@ -115,9 +141,7 @@
         </thead>
     	<tbody>
 <%
-	List<List<String>> pend_prescription = dbCon.select("SELECT medicine.medicine_id, name, quantity"
-			+ " FROM medicine, prescription"
-			+ " WHERE prescription.medicine_id = medicine.medicine_id AND approval_status = 'Pending' AND patient_id =\"" + userID + "\"");
+
 for (List<String> prescriptionRow : pend_prescription) {
 	out.print("<tr>");
 	
@@ -145,5 +169,8 @@ for (List<String> prescriptionRow : pend_prescription) {
 %>
 	</tbody>
 </table>
+<%
+}
+%>
 	</div>
 </html>
