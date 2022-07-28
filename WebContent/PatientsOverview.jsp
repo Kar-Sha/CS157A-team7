@@ -86,9 +86,9 @@
 					out.println("<td>" + cell + "</td>");
 				}
 				
-				String prescriptionButton = "<form method=\"post\" " 
-						+ "action=\"PatientPrescription.jsp?user_id=" + userId + "\" >"
-						+ "<input name=\"prescriptionBtn\" type=\"submit\" value=\"Prescription List\"/>"
+				String prescriptionButton = "<form method=\"post\" "
+						+ "action=\"PatientPrescription.jsp?pharmacy_id=" + pharmacy_id + "&user_id=" + userId + "\" >"
+						+ "<input name=\"prescriptionBtn\" type=\"submit\" value=\"Presciption List\"/>"
 						+"</form>";
 				
 				// put the delete button at the end of the row

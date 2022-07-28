@@ -11,48 +11,139 @@
 
 <%
 	DBConnection dbCon = new DBConnection();
+	String methodType = request.getParameter("method_type");
+	String errorMessage = null;
 	String userID = request.getParameter("user_id");
+	String pharmacy_id = request.getParameter("pharmacy_id");
 	String firstName = dbCon.getFirstName("SELECT first_name FROM patient WHERE patient_id = "+ userID +";");
-	List<List<String>> prescriptionList = dbCon.select("SELECT * FROM prescription WHERE patient_id = "+ userID +";");
-%>
+	
+	// handle approve
+	 if (methodType != null && methodType.equals("approve")) {
+	 		String medicineID = request.getParameter("medicineID");
+			String quantity = request.getParameter("quantity");
+			
+			int approved = dbCon.update("UPDATE prescription set quantity = quantity + " + quantity + " WHERE patient_id = '" + userID 
+					+ "' AND approval_status = 'Approved' AND medicine_id = '" + medicineID + "';");
+			
+			if(approved == 1) {
+				int delete = dbCon.delete("DELETE FROM prescription WHERE patient_id = '" + userID 
+						+ "' AND approval_status = 'Pending' AND medicine_id = '" + medicineID + "';");
+			}
+			
+			else {
+			approved = dbCon.update("UPDATE prescription set approval_status = 'Approved' WHERE patient_id = '" + userID 
+										+ "' AND approval_status = 'Pending' AND medicine_id = '" + medicineID + "';");
+			}
+			if (approved == 1) {
+				// refresh the page to see updated table
+				response.sendRedirect("PatientPrescription.jsp?user_id=" + userID + "&pharmacy_id=" + pharmacy_id);			
+			} else {
+				errorMessage = "'Error in approving user request.'";
+			}
+	 	}
+	
+	// handle deny
+	if (methodType != null && methodType.equals("deny")) {
+	 		String medicineID = request.getParameter("medicineID");
+	 		String quantity = request.getParameter("quantity");
 
+			int denied = dbCon.update("UPDATE medicine_stock set quantity = quantity + " + quantity 
+						+ " WHERE medicine_id = '" + medicineID + "';");
+
+			if (denied == 1) {
+				
+				int delete = dbCon.delete("DELETE FROM prescription WHERE patient_id = '" + userID 
+						+ "' AND approval_status = 'Pending' AND medicine_id = '" + medicineID + "';");
+				
+				// refresh the page to see updated table
+				response.sendRedirect("PatientPrescription.jsp?user_id=" + userID + "&pharmacy_id=" + pharmacy_id);			
+			} else {
+				errorMessage = "'Error in denying user request.'";
+			}
+	 	}
+%>
 <html>
-  <head>
-    <title>
-	Prescription List
-    </title>
-  </head>
-  <body>
-  	<h1>
-    <%out.print(firstName);%>'s Prescription
-  	</h1>
-  	<table border="1" cellpadding="5" cellspacing="2">
+<Title>Prescription List</Title>
+<link rel="stylesheet" type="text/css" href="./resources/css/Table.css"/>
+  <jsp:include page='HeaderStaff.jsp'>
+      <jsp:param name="pharmacyId" value="<%=pharmacy_id%>"/>
+  </jsp:include>
+	
+	<div class="content-body-container">
+
+	<h1>
+	    <% out.print(firstName);%>'s Prescription
+	</h1>
+    <br>
+    <br>
+    <h1>Approved Prescriptions</h1>
+<table>
     	<thead>
            <tr>
-               <th>Patient ID</th>
-               <th>Medicine ID</th>
+               <th>Medicine</th>
                <th>Quantity</th>
-               <th>Approval Status</th>
            </tr>
         </thead>
     	<tbody>
-    	<%
-			for (List<String> prescriptionRow : prescriptionList) {
-				out.print("<tr>");
-				
-				// get data for the user in this row
-				String userId = prescriptionRow.get(0);
-				for (int i = 0; i < prescriptionRow.size(); i++) {
-					if (i == 5) // skip the password column
-						continue;
-					
-					String cell = prescriptionRow.get(i);
-					out.println("<td>" + cell + "</td>");
-				}
-				out.print("</tr>");
-			}
-    	%>
-    	</tbody>
-    </table>
-  </body>
+<%
+	List<List<String>> prescription = dbCon.select("SELECT name, quantity"
+			+ " FROM medicine, prescription"
+			+ " WHERE prescription.medicine_id = medicine.medicine_id AND approval_status = 'Approved' AND patient_id =\"" + userID + "\"");
+	for(List<String> row: prescription) //gets first column of result
+	{
+   		out.print("<tr>");
+   		String current = row.get(0);
+   		for (String cell : row) 
+   		{
+			out.println("<td>" + cell + "</td>");
+		}
+   		out.print("</tr>");
+	}
+%>
+	</tbody>
+</table>
+
+  <h1>Pending Prescriptions</h1>
+<table>
+    	<thead>
+           <tr>
+               <th>Medicine ID</th>
+               <th>Name</th>
+               <th>Quantity</th>
+               <th></th>
+           </tr>
+        </thead>
+    	<tbody>
+<%
+	List<List<String>> pend_prescription = dbCon.select("SELECT medicine.medicine_id, name, quantity"
+			+ " FROM medicine, prescription"
+			+ " WHERE prescription.medicine_id = medicine.medicine_id AND approval_status = 'Pending' AND patient_id =\"" + userID + "\"");
+for (List<String> prescriptionRow : pend_prescription) {
+	out.print("<tr>");
+	
+	// get data for the user in this row
+	String medicineID = prescriptionRow.get(0);
+	String quantity = prescriptionRow.get(2);
+	for (int i = 0; i < prescriptionRow.size(); i++) {
+		
+		String cell = prescriptionRow.get(i);
+		out.println("<td>" + cell + "</td>");
+	}
+		// put the approve button at the end of the row
+		String approveButton = "<form method=\"post\" " 
+								+ "action=\"PatientPrescription.jsp?method_type=approve&quantity=" + quantity + "&medicineID=" + medicineID + "&user_id=" + userID + "&pharmacy_id=" + pharmacy_id + "\" >"
+								+ "<input name=\"approveUserBtn\" type=\"submit\" value=\"Approve\"/>"
+								+"</form>";
+								
+		// deny button
+		String denyButton = "<form method=\"post\" " 
+								+ "action=\"PatientPrescription.jsp?method_type=deny&quantity=" + quantity + "&medicineID=" + medicineID + "&user_id=" + userID + "&pharmacy_id=" + pharmacy_id + "\" >"
+								+ "<input name=\"approveUserBtn\" type=\"submit\" value=\"Deny\"/>"
+								+"</form>";
+		out.print("<td>" + approveButton + "&nbsp;&nbsp;" + denyButton + "</td></tr>");
+}
+%>
+	</tbody>
+</table>
+	</div>
 </html>
