@@ -76,7 +76,7 @@
 	</h1>
     <br>
     <br>
-    <h1><% out.print(firstName);%>'s Approved Prescriptions</h1>
+    <h1>Approved Prescriptions</h1>
     <%
     List<List<String>> prescription = dbCon.select("SELECT name, quantity"
 			+ " FROM medicine, prescription"
@@ -118,7 +118,7 @@
 
 <br>
 <br>
-  <h1><% out.print(firstName);%>'s Pending Prescriptions</h1>
+  <h1>Pending Prescriptions</h1>
   <%
 	List<List<String>> pend_prescription = dbCon.select("SELECT medicine.medicine_id, name, quantity"
 			+ " FROM medicine, prescription"
