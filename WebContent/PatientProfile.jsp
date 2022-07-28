@@ -44,6 +44,24 @@
     %>
     <br>
     <h1>Known Allergies</h1>
+    <%
+ 	// get patient_id given their username
+ 	List<List<String>> patientIdQueryRes = DBConnection.select("SELECT patient_id FROM patient WHERE username = \"" + user + "\"");
+ 	String patient_id = patientIdQueryRes.get(0).get(0);
+ 	
+ 	//selects ingredient id and name of the medicine
+ 	List<List<String>> prescription = dbCon.select("SELECT ingredient.ingredient_id, name"
+ 			+ " FROM patient_allergies, ingredient"
+ 			+ " WHERE patient_allergies.ingredient_id = ingredient.ingredient_id AND patient_id =\"" + patient_id + "\"");
+ 	
+ 	if(prescription.size() == 0)
+ 	{
+ 		out.print("You have no Allergies on Record");
+ 	}
+ 	else
+ 	{
+ 		
+    %>
 <table> 
     	<thead>
            <tr>
@@ -53,14 +71,7 @@
         </thead>
     	<tbody>
 <%
-	// get patient_id given their username
-	List<List<String>> patientIdQueryRes = DBConnection.select("SELECT patient_id FROM patient WHERE username = \"" + user + "\"");
-	String patient_id = patientIdQueryRes.get(0).get(0);
 	
-	//selects ingredient id and name of the medicine
-	List<List<String>> prescription = dbCon.select("SELECT ingredient.ingredient_id, name"
-			+ " FROM patient_allergies, ingredient"
-			+ " WHERE patient_allergies.ingredient_id = ingredient.ingredient_id AND patient_id =\"" + patient_id + "\"");
 	for(List<String> row: prescription) //gets first column of result
 	{
    		out.print("<tr>");
@@ -74,11 +85,11 @@
 %>
 	</tbody>
 </table>
-
+<%
+}
+%>
  
 <br>
     </body>
-    <br>
-    <br>
 	</div>
 </html>

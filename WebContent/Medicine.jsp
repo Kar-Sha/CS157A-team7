@@ -34,6 +34,17 @@ out.print(medicine.get(0).get(0));
 <br>
 <body>
 <h1>Locations Available</h1>
+<%
+List<List<String>> result = DBConnection.select("SELECT medicine.medicine_id, medicine.name, pharmacy.pharmacy_id, pharmacy.name, location, quantity"
+		+ " FROM pharmacy, medicine, medicine_stock"
+		+ " WHERE medicine_stock.medicine_id = medicine.medicine_id AND medicine_stock.pharmacy_id = pharmacy.pharmacy_id"
+		+ " AND medicine.medicine_id = " + med_id + "");
+
+if(result.size() == 0)
+{
+	out.print("There are no Locations that Carry " + medicine.get(0).get(0) + " . Sorry for the Inconvenience");
+}
+%>
 <table>
     	<thead>
            <tr>
@@ -46,10 +57,6 @@ out.print(medicine.get(0).get(0));
         </thead>
     	<tbody>
 <% 
-    List<List<String>> result = DBConnection.select("SELECT medicine.medicine_id, medicine.name, pharmacy.pharmacy_id, pharmacy.name, location, quantity"
-    		+ " FROM pharmacy, medicine, medicine_stock"
-    		+ " WHERE medicine_stock.medicine_id = medicine.medicine_id AND medicine_stock.pharmacy_id = pharmacy.pharmacy_id"
-    		+ " AND medicine.medicine_id = " + med_id + "");
     
     for(List<String> row: result) //gets first column of result
 	{
