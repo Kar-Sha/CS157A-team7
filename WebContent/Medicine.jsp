@@ -9,6 +9,7 @@
 <%@ page import="pharma.DBConnection"%>
 <head>
 <title>Medicine</title>
+<link rel="stylesheet" type="text/css" href="./resources/css/PharmaTheme.css"/>
 <link rel="stylesheet" type="text/css" href="./resources/css/Table.css"/>
 <script>
 	// checks if requested amount is available
@@ -22,6 +23,7 @@
  	}
 </script>
 </head>
+<div class="content-body-container">
 <h1> 
 <%
 String user = request.getParameter("username");
@@ -30,7 +32,6 @@ List<List<String>> medicine = DBConnection.select("SELECT name FROM medicine WHE
 out.print(medicine.get(0).get(0));
 %>
 </h1>
-<br>
 <br>
 <body>
 <h1>Locations Available</h1>
@@ -121,5 +122,6 @@ if(result.size() == 0)
 %>
 	</tbody>
 </table>
+</div>
 </body>
 </html>
