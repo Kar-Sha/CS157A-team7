@@ -80,7 +80,7 @@ if(result.size() == 0)
     	<td>
     		<form name="requestPrescriptionForm" method="post" onsubmit="return validateRequest(<%= stockQuantityStr %>)" 
     			action="RequestPrescription.jsp?username=<%=user + "&medicine_id=" + medicineId + "&pharmacy_id=" + pharmacyId %>">
-    			<input name="quantity" type="number" min="1">
+    			<input name="quantity" type="number" min="1" max="<%=stockQuantityStr%>">
     			<input name="reqUserBtn" type="submit" value="Request"/>
     		</form>
     	</td>
