@@ -26,7 +26,7 @@
 
 		if (deleted == 1) {
 			// refresh the page to see updated table
-			response.sendRedirect("PatientsOverview.jsp");			
+			response.sendRedirect("PatientsOverview.jsp?pharmacy_id=" + pharmacy_id);			
 		} else {
 			errorMessage = "'Error in deleting user.'";
 		}
@@ -93,7 +93,7 @@
 				
 				// put the delete button at the end of the row
 				String deleteButton = "<form method=\"post\" " 
-										+ "action=\"PatientsOverview.jsp?method_type=delete&user_id=" + userId + "\" >"
+										+ "action=\"PatientsOverview.jsp?method_type=delete&user_id=" + userId + "&pharmacy_id=" + pharmacy_id + "\" >"
 										+ "<input name=\"deleteUserBtn\" type=\"submit\" value=\"Remove User\"/>"
 										+"</form>";
 				out.print("<td>" + prescriptionButton + "&nbsp;&nbsp;" + deleteButton + "</td></tr>");
