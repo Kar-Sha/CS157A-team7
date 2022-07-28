@@ -90,6 +90,9 @@
 </table>
 <br>
     Looking for something new? <input type="button" value="Browse Medicines" onclick="window.location='Browse.jsp?username=<%=user%>'" >
+    <br>
+    <br>
+    Want you view your profile? <input type="button" value="View Your Profile" onclick="window.location='PatientProfile.jsp?username=<%=user%>'" >
     </body>
     <br>
     <br>
