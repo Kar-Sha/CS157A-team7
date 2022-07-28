@@ -24,7 +24,7 @@
         int added = DBConnection.insert("INSERT INTO prescription(patient_id, medicine_id, quantity)" +
         "VALUES(" + patient_id + ", '" + med_id + "', " + quantity +");");
         
-        int updated = DBConnection.update("UPDATE medicine_stock SET quantity = quantity -" + quantity + " WHERE pharmacy_id =" + pharmacy_id + " ;");
+        int updated = DBConnection.update("UPDATE medicine_stock SET quantity = quantity -" + quantity + " WHERE pharmacy_id =" + pharmacy_id + " AND medicine_id =" + med_id + " ;");
         
         if (added == 0 || updated < 1) {
     		// error
