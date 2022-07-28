@@ -26,14 +26,22 @@
 	<h1>Personal Information</h1>
     <body>
     <% 
-    List<List<String>> result = dbCon.select("SELECT first_name, last_name, email FROM patient WHERE username = \"" + user + "\"");
-    out.print("Name: " + result.get(0).get(0) + " " + result.get(0).get(1));
+    List<List<String>> result = dbCon.select("SELECT first_name, last_name, username, email, LEFT(create_date, INSTR(create_date, ' '))"
+    		+ " FROM patient WHERE username = \"" + user + "\"");
+    out.print("<b>Name: </b>" + result.get(0).get(0) + " " + result.get(0).get(1));
+    %>
+    <br>
+     <% 
+    out.println("<b>Username: </b>" + result.get(0).get(2)); 
     %>
     <br>
     <% 
-    out.println("Email: " + result.get(0).get(2)); 
+    out.println("<b>Email: </b>" + result.get(0).get(3)); 
     %>
     <br>
+    <%
+    out.println("<b>Date Joined: </b>" + result.get(0).get(4)); 
+    %>
     <br>
     <h1>Known Allergies</h1>
 <table> 
@@ -49,6 +57,7 @@
 	List<List<String>> patientIdQueryRes = DBConnection.select("SELECT patient_id FROM patient WHERE username = \"" + user + "\"");
 	String patient_id = patientIdQueryRes.get(0).get(0);
 	
+	//selects ingredient id and name of the medicine
 	List<List<String>> prescription = dbCon.select("SELECT ingredient.ingredient_id, name"
 			+ " FROM patient_allergies, ingredient"
 			+ " WHERE patient_allergies.ingredient_id = ingredient.ingredient_id AND patient_id =\"" + patient_id + "\"");
@@ -68,7 +77,6 @@
 
  
 <br>
-    Found something else you are allergic to? <input type="button" value="Report New Allergy" onclick="window.location='AddAllergy.jsp?username=<%=user%>'" >
     </body>
     <br>
     <br>
