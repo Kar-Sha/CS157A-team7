@@ -40,3 +40,52 @@ h1 {
 	cursor: pointer;
 	transition: background-color .3s ease;
 }
+
+.form-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 10vh;
+}
+
+.form-container input {
+	padding: 5px 10px;
+	font-size: 17px;
+	margin-bottom: 10px;
+}
+
+.form-container input[type=submit] {
+	width: 200px;
+}
+
+.form-container table {
+	vertical-align: middle;
+}
+
+.row {
+	display: inline-flex;
+    gap: 10px;
+    height: fit-content;
+    align-items: center;
+}
+
+.form-container h1 {
+	margin-bottom: 0px
+}
+
+.form-container h1 + p {
+	font-weight: bold;
+}
+
+.form-container table td:first-child {
+	text-align:right;
+	padding: 0px 10px 10px 0px;
+}
+
+.form-container input[type=text] {
+	letter-spacing: 1px;
+}
+
+.form-container input[type=password] {
+	letter-spacing: 3.5px;
+}

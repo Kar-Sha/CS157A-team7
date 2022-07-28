@@ -4,16 +4,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login with JSP</title>
+        <link rel="stylesheet" type="text/css" href="./resources/css/PharmaTheme.css"/>
     </head>
     <body>
+      <div class="content-body-container form-container">
+      	<h1>Welcome to PharmaPickup</h1>
+      	<p>Staff Login</p>
+      	<br/>
         <form method="post" action="StaffValidate.jsp">
-            <center>
-            <table border="1" cellpadding="5" cellspacing="2">
-                <thead>
-                    <tr>
-                        <th colspan="2">Welcome to PharmaPickup</th>
-                    </tr>
-                </thead>
+            <table>
                 <tbody>
                     <tr>
                         <td>Username</td>
@@ -25,12 +24,13 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
+                        	<br/>
                         	<input type="submit" value="Login" />
                         </td>                        
                     </tr>                    
                 </tbody>
             </table>
-            </center>
         </form>
+      </div>
     </body>
 </html>

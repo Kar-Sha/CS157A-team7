@@ -4,16 +4,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Register with JSP</title>
+        <link rel="stylesheet" type="text/css" href="./resources/css/PharmaTheme.css"/>
     </head>
     <body>
+   	  <div class="content-body-container form-container">
+   	  	<h1>Welcome to PharmaPickup</h1>
+   	  	<p>Patient Register</p>
+   	  	<br/>
         <form method="post" action="AddUser.jsp">
-            <center>
-            <table border="1" cellpadding="5" cellspacing="2">
-                <thead>
-                    <tr>
-                        <th colspan="2">Welcome to PharmaPickup</th>
-                    </tr>
-                </thead>
+            <table>
                 <tbody>
                     <tr>
                         <td>First Name</td>
@@ -36,18 +35,20 @@
                         <td><input type="password" name="password" required/></td>
                     </tr>
                     <tr>
+                    	<td></td>
                         <td colspan="2" align="center">
                         	<input type="submit" value="Register" />
-                            &nbsp;&nbsp;
                         </td>                       
                     </tr>                    
                 </tbody>
             </table>
-            <html>
-                        	<body>Already have an account? </body>
-                        	</html>
-                        	<input type="submit" value="Back to Login" onclick="window.location='Login.jsp'"/>
-            </center>
+            <br/>
+            <div class="row">
+		        <p>Already have an account?</p>
+                <a href="Login.jsp">Back to Login</a>
+	        </div>
+                        	
         </form>
+      </div>
     </body>
 </html>
