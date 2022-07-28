@@ -32,15 +32,7 @@
     <br>
     <br>
     <h1>Approved Prescriptions</h1>
-<table>
-    	<thead>
-           <tr>
-               <th>Medicine</th>
-               <th>Quantity</th>
-           </tr>
-        </thead>
-    	<tbody>
-<%
+    <%
 	// get patient_id given their username
 	List<List<String>> patientIdQueryRes = DBConnection.select("SELECT patient_id FROM patient WHERE username = \"" + user + "\"");
 	String patient_id = patientIdQueryRes.get(0).get(0);
@@ -48,21 +40,68 @@
 	List<List<String>> prescription = dbCon.select("SELECT name, quantity"
 			+ " FROM medicine, prescription"
 			+ " WHERE prescription.medicine_id = medicine.medicine_id AND approval_status = 'Approved' AND patient_id =\"" + patient_id + "\"");
+	
+	if(prescription.size() == 0)
+	{
+		out.print("You have no Active Prescriptions");
+	}
+	else
+	{
+    %>
+<table>
+    	<thead>
+           <tr>
+               <th>Medicine</th>
+               <th>Quantity</th>
+               <th>Update Quantity</th>
+           </tr>
+        </thead>
+    	<tbody>
+<%
+
 	for(List<String> row: prescription) //gets first column of result
 	{
+		String medicineID = row.get(0);
    		out.print("<tr>");
    		String current = row.get(0);
-   		for (String cell : row) 
+   		for (int i=0; i<row.size(); i++) 
    		{
-			out.println("<td>" + cell + "</td>");
+   			String quantity = row.get(i);
+			out.println("<td>" + row.get(i) + "</td>");
+			if(i == 1)
+			{
+				%>
+				<td>
+    		<form name="updateApprovedPrescriptionQuantityForm" method="post" 
+    			action="UpdateApprovedPrescriptionQuantity.jsp?username=<%=user + "&name=" + medicineID%>">
+    			<input name="quantity" type="number" min="0" max="<%=quantity%>" value="<%=quantity%>">
+    			<input name="updatePresQtyBtn" type="submit" value="Update"/>
+    		</form>
+    	</td>
+    	<% 
+			}
 		}
    		out.print("</tr>");
 	}
 %>
 	</tbody>
 </table>
-
+<%
+}
+%>
   <h1>Pending Prescriptions</h1>
+ <%
+ List<List<String>> pend_prescription = dbCon.select("SELECT name, quantity"
+			+ " FROM medicine, prescription"
+			+ " WHERE prescription.medicine_id = medicine.medicine_id AND approval_status = 'Pending' AND patient_id =\"" + patient_id + "\"");
+ 
+ if(pend_prescription.size() == 0)
+ {
+	 out.print("You have no Pending Prescriptions");
+ }
+ else
+ {
+ %>
 <table>
     	<thead>
            <tr>
@@ -72,9 +111,7 @@
         </thead>
     	<tbody>
 <%
-	List<List<String>> pend_prescription = dbCon.select("SELECT name, quantity"
-			+ " FROM medicine, prescription"
-			+ " WHERE prescription.medicine_id = medicine.medicine_id AND approval_status = 'Pending' AND patient_id =\"" + patient_id + "\"");
+	
 	for(List<String> row: pend_prescription) //gets first column of result
 	{
    		out.print("<tr>");
@@ -88,14 +125,10 @@
 %>
 	</tbody>
 </table>
-<br>
-    Looking for something new? <input type="button" value="Browse Medicines" onclick="window.location='Browse.jsp?username=<%=user%>'" >
-    <br>
-    <br>
-    Want you view your profile? <input type="button" value="View Your Profile" onclick="window.location='PatientProfile.jsp?username=<%=user%>'" >
+<%
+}
+%>
     </body>
-    <br>
-    <br>
 	</div>
 </html>
 
