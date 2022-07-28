@@ -22,13 +22,21 @@
  	}
 </script>
 </head>
+<h1> 
+<%
+String user = request.getParameter("username");
+String med_id = request.getParameter("medicine_id");
+List<List<String>> medicine = DBConnection.select("SELECT name FROM medicine WHERE medicine_id=" + med_id + ";");
+out.print(medicine.get(0).get(0));
+%>
+</h1>
+<br>
+<br>
 <body>
 <h1>Locations Available</h1>
 <table>
     	<thead>
            <tr>
-               <th>Medicine ID</th>
-               <th>Medicine Name</th>
                <th>Pharmacy ID</th>
                <th>Pharmacy Name</th>
                <th>Location</th>
@@ -37,9 +45,7 @@
            </tr>
         </thead>
     	<tbody>
-<% String user = request.getParameter("username");
-String med_id = request.getParameter("medicine_id");
-
+<% 
     List<List<String>> result = DBConnection.select("SELECT medicine.medicine_id, medicine.name, pharmacy.pharmacy_id, pharmacy.name, location, quantity"
     		+ " FROM pharmacy, medicine, medicine_stock"
     		+ " WHERE medicine_stock.medicine_id = medicine.medicine_id AND medicine_stock.pharmacy_id = pharmacy.pharmacy_id"
@@ -51,9 +57,13 @@ String med_id = request.getParameter("medicine_id");
     	String medicineId = row.get(0);
     	String pharmacyId = row.get(2);
     	String stockQuantityStr = row.get(5);
-    	for (String cell : row) 
+    	for (int i=0; i<row.size(); i++) 
     	{
-			out.println("<td>" + cell + "</td>");
+			if(i == 0 || i ==1)
+			{
+				continue;
+			}
+    		out.println("<td>" + row.get(i) + "</td>");
 		}
     	
     	if (Integer.parseInt(stockQuantityStr) > 0) {
