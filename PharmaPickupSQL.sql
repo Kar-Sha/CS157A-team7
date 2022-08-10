@@ -19,7 +19,12 @@ CREATE TABLE pharmacy (
   (7, 'Safeway', '1663 Branham Ln'), 
   (8, 'Costco', '5301 Almaden Expy'), 
   (9, 'CVS', '4550 Meridian Ave'), 
-  (10, 'Walgreens', '1376 Kooser Rd'); 
+  (10, 'Walgreens', '1376 Kooser Rd'),
+  (11, 'iCare', '1727 Berryessa Rd'), 
+  (12, 'McKee Medical', '2350 McKee Rd'), 
+  (13, 'Jackson Medical', '266 N Jackson Ave'), 
+  (14, 'Alum Rock Pharmacy', '1855 Alum Rock Ave'), 
+  (15, 'Creekside Pharmacy', '1863 Alum Rock Ave'); 
 
 -- Table for patient (Entity Set)
 CREATE TABLE patient (
@@ -42,7 +47,12 @@ CREATE TABLE patient (
   (7, 'Gary', 'Mod', 'garymod', 'garm@steam.com', 'valve', '2014-03-05 08:25:00'),
   (8, 'Celine', 'Dion', 'celion97', 'heartgoeson@music.com', 'music', '2014-05-11 20:10:07'),
   (9, 'Tony', 'Chopper', 'opfan5', 'tonytonychopper@onepiece.com', 'iloveop', '2014-12-25 12:25:31'),
-  (10, 'Michael', 'Gold', 'goldenboy', 'michaelgold@gmail.com', 'aumetal', '2015-09-09 09:09:09');
+  (10, 'Michael', 'Gold', 'goldenboy', 'michaelgold@gmail.com', 'aumetal', '2015-09-09 09:09:09'),
+  (11, 'Kyle', 'Chan', 'kunchan', 'kyle.chan@sjsu.edu', 'kylekun', '2016-10-23 03:13:34'),
+  (12, 'Walter', 'Griffon', 'gwalts', 'waltsing@music.com', 'classical', '2017-03-25 09:15:30'),
+  (13, 'Nathanael', 'Lacuata', 'mhplayer', 'nathunter@steam.com', 'mhunter', '2017-05-13 22:11:07'),
+  (14, 'Jojo', 'Bizarre', 'adventure', 'jojos@shonenjump.com', 'jojo6', '2018-12-27 01:05:31'),
+  (15, 'Mike', 'Wu', 'professor', 'ching-seh.wu@sjsu.edu', 'cs157a', '2019-09-08 08:09:09');
  
 -- Table for staff (Entity Set)
 CREATE TABLE staff (
@@ -64,7 +74,12 @@ CREATE TABLE staff (
   (7, 7, 'care', 'carepass', '2006-07-07 07:07:07'),
   (8, 8, 'aid', 'aidpass', '2006-08-08 08:08:08'),
   (9, 9, 'bandage', 'bandpass', '2006-09-09 09:09:09'),
-  (10, 10, 'heal', 'healpass', '2006-10-10 10:10:10');
+  (10, 10, 'heal', 'healpass', '2006-10-10 10:10:10'),
+  (11, 11, 'medicine', 'medicinepass', '2006-11-16 06:16:16'),
+  (12, 12, 'emergency', 'empass', '2006-12-07 07:17:07'),
+  (13, 13, 'injury', 'inpass', '2007-01-08 09:03:48'),
+  (14, 14, 'life', 'lifepass', '2007-02-09 09:19:39'),
+  (15, 15, 'recover', 'repass', '2007-03-10 11:20:10');
  
 -- Table for medicine (Entity Set)
 CREATE TABLE medicine (
@@ -114,7 +129,9 @@ CREATE TABLE category (
   (10, 'Burns'),
   (11, 'Rash'),
   (12, 'Skin Irritation'),
-  (13, 'Miscellaneous');
+  (13, 'Dryness'),
+  (14, 'Injury'),
+  (15, 'Miscellaneous');
  
 -- Table for different categories that medicine falls under (Relationship)
 CREATE TABLE medicine_category (
@@ -148,15 +165,18 @@ CREATE TABLE medicine_category (
   (11,3),
   (12,8),
   (13,2),
-  (13,13),
+  (13,15),
   (14,6),
   (15,11),
   (15,12),
   (16,12),
+  (16,13),
   (17,9),
   (17,10),
-  (18,13),
-  (19,13),
+  (18,14),
+  (18,15),
+  (19,15),
+  (19,14),
   (20,6),
   (20,7);
 
@@ -180,7 +200,12 @@ CREATE TABLE prescription (
   (7, 10, 20, 'Approved'),
   (9, 6, 1, 'Approved'),
   (9, 7, 2, 'Approved'),
-  (9, 8, 1, 'Approved');
+  (9, 8, 1, 'Approved'),
+  (11, 4, 1, 'Approved'),
+  (11, 10, 20, 'Approved'),
+  (12, 6, 1, 'Approved'),
+  (13, 16, 2, 'Approved'),
+  (14, 18, 1, 'Approved');
 
 -- Table for medicine stock within different pharmacies (Relationship)
 CREATE TABLE medicine_stock (
@@ -202,8 +227,8 @@ CREATE TABLE medicine_stock (
   (8, 7, 32),
   (9, 9, 27),
   (10, 6, 51),
-  (11, 3, 7),
-  (11, 6, 34),
+  (11, 6, 7),
+  (11, 3, 34),
   (11, 8, 29),
   (12, 1, 41), 
   (12, 2, 10),
@@ -219,7 +244,13 @@ CREATE TABLE medicine_stock (
   (18, 6, 24),
   (19, 5, 15),
   (20, 8, 35),
-  (20, 10, 50);
+  (20, 10, 50),
+  (16, 11, 20),
+  (18, 12, 24),
+  (19, 12, 15),
+  (2, 13, 31),
+  (20, 14, 30),
+  (16, 15, 23);
 
 -- Table for ingredients (Entity Set)
 CREATE TABLE ingredient (
